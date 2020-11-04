@@ -16,6 +16,9 @@ namespace API.Data
         public DbSet<UserLike> Likes { get; set; }
         public DbSet<Message> Messages { get; set; }
 
+    // Flak added 11-03
+        public DbSet<Flak> Flaks { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -48,6 +51,18 @@ namespace API.Data
                 .HasForeignKey(s => s.LikedUserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // Flak 11-03
+                builder.Entity<Flak>()
+                .HasOne(u => u.Recipient)
+                .WithMany(m => m.FlaksReceived)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Flak>()
+                .HasOne(u => u.Sender)
+                .WithMany(m => m.FlaksSent)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Message
             builder.Entity<Message>()
                 .HasOne(u => u.Recipient)
                 .WithMany(m => m.MessagesReceived)

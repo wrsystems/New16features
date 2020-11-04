@@ -25,5 +25,10 @@ namespace API.Entities
         public ICollection<Message> MessagesReceived { get; set; }
         public ICollection<AppUserRole> UserRoles { get; set; }
 
+
+    // Flak add 11-03
+        public ICollection<Flak> FlaksSent { get; set; }
+        public ICollection<Flak> FlaksReceived { get; set; }
+
     }
 }
