@@ -11,7 +11,7 @@ namespace API.Interfaces
         void AddFlak(Flak flak);
         void DeleteFlak(Flak flak);
         Task<Flak> GetFlak(int id);
-        Task<PagedList<FlakDto>> GetFlaksForUser(MessageParams messageParams);
+        Task<PagedList<FlakDto>> GetFlaksForUser(FlakParams flakParams);
         Task<IEnumerable<FlakDto>> GetFlakThread(string currentUsername, string recipientUsername);
         Task<bool> SaveAllAsync();
     }

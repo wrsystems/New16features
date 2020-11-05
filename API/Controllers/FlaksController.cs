@@ -33,7 +33,7 @@ namespace API.Controllers
             var username = User.GetUsername();
 
             if (username == createFlakDto.RecipientUsername.ToLower())
-                return BadRequest("You cannot send FLAKS !! messages to yourself dumbhead ");
+                return BadRequest("You cannot send FLAKS !! to yourself dumbhead ");
 
             var sender = await _userRepository.GetUserByUsernameAsync(username);
             var recipient = await _userRepository.GetUserByUsernameAsync(createFlakDto.RecipientUsername);
@@ -53,7 +53,7 @@ namespace API.Controllers
 
             if (await _flakRepository.SaveAllAsync()) return Ok(_mapper.Map<FlakDto>(flak));
 
-            return BadRequest("Failed to send FLAK !! message");
+            return BadRequest("Failed to send FLAK !! ");
 
         }
 
@@ -61,14 +61,14 @@ namespace API.Controllers
         // ********************** second endpoint DO NOT USE  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FlakDto>>> GetFlaksForUser([FromQuery] 
-            MessageParams messageParams)
+            FlakParams flakParams)
         {
-            messageParams.Username = User.GetUsername();
+            flakParams.Username = User.GetUsername();
 
-            var flaks = await _flakRepository.GetFlaksForUser(messageParams);
+            var flaks = await _flakRepository.GetFlaksForUser(flakParams);
 
-            // Response.AddPaginationHeader(messages.CurrentPage, messages.PageSize, 
-            //     messages.TotalCount, messages.TotalPages);
+            Response.AddPaginationHeader(flaks.CurrentPage, flaks.PageSize, 
+                flaks.TotalCount, flaks.TotalPages);
 
             return flaks;
         }
@@ -104,7 +104,7 @@ namespace API.Controllers
 
             if (await _flakRepository.SaveAllAsync()) return Ok();
 
-            return BadRequest("Problem deleting the FLAK !! message");
+            return BadRequest("Problem deleting the FLAK !! ");
         }
     }
 }

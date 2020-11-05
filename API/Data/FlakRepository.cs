@@ -42,26 +42,26 @@ namespace API.Data
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
 
-    // note message parans not changed - - DO NOT USED  *********************************************
-        public async Task<PagedList<FlakDto>> GetFlaksForUser(MessageParams messageParams)
+    // 11/4 note parans are now changed - -  *********************************************
+        public async Task<PagedList<FlakDto>> GetFlaksForUser(FlakParams flakParams)
         {
             var query = _context.Flaks
                 .OrderByDescending(m => m.FlakSent)
                 .AsQueryable();
 
-            // query = messageParams.Container switch
-            // {
-            //     "Inbox" => query.Where(u => u.Recipient.UserName == messageParams.Username 
-            //         && u.RecipientDeleted == false),
-            //     "Outbox" => query.Where(u => u.Sender.UserName == messageParams.Username
-            //         && u.SenderDeleted == false),
-            //     _ => query.Where(u => u.Recipient.UserName ==
-            //         messageParams.Username && u.RecipientDeleted == false && u.DateRead == null)
-            // };
+            query = flakParams.Container switch
+            {
+                "Inbox" => query.Where(u => u.Recipient.UserName == flakParams.Username 
+                    && u.RecipientDeleted == false),
+                "Outbox" => query.Where(u => u.Sender.UserName == flakParams.Username
+                    && u.SenderDeleted == false),
+                _ => query.Where(u => u.Recipient.UserName ==
+                    flakParams.Username && u.RecipientDeleted == false && u.DateRead == null)
+            };
 
             var flaks = query.ProjectTo<FlakDto>(_mapper.ConfigurationProvider);
 
-            return await PagedList<FlakDto>.CreateAsync(flaks, messageParams.PageNumber, messageParams.PageSize);
+            return await PagedList<FlakDto>.CreateAsync(flaks, flakParams.PageNumber, flakParams.PageSize);
 
         }
 

@@ -15,6 +15,8 @@ import { MemberDetailedResolver } from './_resolvers/member-detailed.resolver';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { AdminGuard } from './_guards/admin.guard';
 
+import { FlakFlaksComponent } from './flak/flak-flaks/flak-flaks.component';
+
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {
@@ -27,6 +29,9 @@ const routes: Routes = [
       {path: 'member/edit', component: MemberEditComponent, canDeactivate: [PreventUnsavedChangesGuard]},
       {path: 'lists', component: ListsComponent},
       {path: 'messages', component: MessagesComponent},
+
+      // Added 11-04
+      {path: 'flaks', component: FlakFlaksComponent},
       {path: 'admin', component: AdminPanelComponent, canActivate: [AdminGuard]},
     ]
   },
