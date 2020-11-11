@@ -58,7 +58,7 @@ namespace API.Controllers
         }
 
 
-        // ********************** second endpoint DO NOT USE  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // ********************** second endpoint paging used by service.ts for Flaks testing
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FlakDto>>> GetFlaksForUser([FromQuery] 
             FlakParams flakParams)
@@ -73,6 +73,23 @@ namespace API.Controllers
             return flaks;
         }
 
+        // ----------------------------------------------------------------------------------------
+        // ********************** TRIAL endpoint paging used by service.ts for FlakCards
+         // ----------------------------------------------------------------------------------------
+
+        // [HttpGet]
+        // public async Task<ActionResult<IEnumerable<FlakDto>>> GetFlaksForSingleUser([FromQuery] 
+        //     FlakParams flakParams)
+        // {
+        //     flakParams.Username = User.GetUsername();
+
+        //     var flaks = await _flakRepository.GetFlaksForUser(flakParams);
+
+        //     Response.AddPaginationHeader(flaks.CurrentPage, flaks.PageSize, 
+        //         flaks.TotalCount, flaks.TotalPages);
+
+        //     return flaks;
+        // }
 
         // *******************  Third endpoint
         [HttpGet("thread/{username}")]

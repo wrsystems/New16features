@@ -33,6 +33,12 @@ import { UserManagementComponent } from './admin/user-management/user-management
 import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
 import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
 import { FlakFlaksComponent } from './flak/flak-flaks/flak-flaks.component';
+import { LoginComponent } from './login/login.component';
+
+// added 11-10
+import { FlakHomeComponent } from './flak/flak-home/flak-home.component';
+import { FlakDetailComponent } from './flak/flak-detail/flak-detail.component';
+import { FlakCardComponent } from './flak/flak-card/flak-card.component';
 
 @NgModule({
   declarations: [
@@ -58,8 +64,12 @@ import { FlakFlaksComponent } from './flak/flak-flaks/flak-flaks.component';
     UserManagementComponent,
     PhotoManagementComponent,
     RolesModalComponent,
-    FlakFlaksComponent
-  ],
+    FlakFlaksComponent,
+    LoginComponent,
+    FlakHomeComponent,
+    FlakDetailComponent,
+    FlakCardComponent
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule,

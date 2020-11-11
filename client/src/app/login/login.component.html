@@ -1,0 +1,42 @@
+<p>
+  login works!
+</p>
+
+<!-- < class="container" >
+ <a class="navbar-brand" routerLink='/' routerLinkActive='active'>Dating App</a>
+  <div>
+    <ng-container *ngIf="accountService.currentUser$ | async">
+    </ng-container>
+  </div> -->
+
+
+<!-- If NOT logged in (meaning null) determined by currentUser$ set in AccountService Then FORM -->
+
+  <div *ngIf="(accountService.currentUser$ | async) === null" >
+    <div class="d-flex justify-content-center mt-5">
+      <div class ="col-3">
+        <form #loginForm="ngForm" (ngSubmit)="login()">
+
+          <div class= "form-inline mt-2 mt-md-0 " >
+            <h1 class= h3 mb-3 font-weight-normal> Login Screen</h1>
+          </div>
+
+          <input
+              name="username"
+              [(ngModel)]="model.username"
+              class="form-control mr-sm-2"
+              type="text"
+              placeholder="Username">
+          <input
+              name="password"
+              [(ngModel)]="model.password"
+              class="form-control mr-sm-2"
+              type="password"
+              placeholder="Password">
+            <button class="btn btn-success my-2 my-sm-0" type="submit" >Login </button>
+          </form>
+      </div>
+    </div>
+  </div>
+
+  <app-nav>  </app-nav>

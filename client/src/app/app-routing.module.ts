@@ -16,6 +16,7 @@ import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { AdminGuard } from './_guards/admin.guard';
 
 import { FlakFlaksComponent } from './flak/flak-flaks/flak-flaks.component';
+import { FlakHomeComponent } from './flak/flak-home/flak-home.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -32,6 +33,8 @@ const routes: Routes = [
 
       // Added 11-04
       {path: 'flaks', component: FlakFlaksComponent},
+      // Added 11-10
+      {path: 'flakcards', component: FlakHomeComponent},
       {path: 'admin', component: AdminPanelComponent, canActivate: [AdminGuard]},
     ]
   },

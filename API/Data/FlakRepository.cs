@@ -46,6 +46,7 @@ namespace API.Data
         public async Task<PagedList<FlakDto>> GetFlaksForUser(FlakParams flakParams)
         {
             var query = _context.Flaks
+                .Where(m=>m.Sender.UserName == flakParams.Username )  // 11-10 I added this !!!! Worked
                 .OrderByDescending(m => m.FlakSent)
                 .AsQueryable();
 

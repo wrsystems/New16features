@@ -9,6 +9,8 @@ import { MembersService } from 'src/app/_services/members.service';
   styleUrls: ['./member-card.component.css'],
 })
 export class MemberCardComponent implements OnInit {
+
+  // 11-20 below was long-lsting error, failed to include Input as coming from between <app-flak-home>
   @Input() member: Member;
 
   constructor(private memberService: MembersService, private toastr: ToastrService) { }
@@ -19,7 +21,7 @@ export class MemberCardComponent implements OnInit {
   addLike(member: Member) {
     this.memberService.addLike(member.username).subscribe(() => {
       this.toastr.success('You have liked ' + member.knownAs);
-    })
+    });
   }
 
 }
