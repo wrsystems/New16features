@@ -39,6 +39,7 @@ import { LoginComponent } from './login/login.component';
 import { FlakHomeComponent } from './flak/flak-home/flak-home.component';
 import { FlakDetailComponent } from './flak/flak-detail/flak-detail.component';
 import { FlakCardComponent } from './flak/flak-card/flak-card.component';
+import { NavMineComponent } from './nav-mine/nav-mine.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { FlakCardComponent } from './flak/flak-card/flak-card.component';
     LoginComponent,
     FlakHomeComponent,
     FlakDetailComponent,
-    FlakCardComponent
+    FlakCardComponent,
+    NavMineComponent
    ],
   imports: [
     BrowserModule,
