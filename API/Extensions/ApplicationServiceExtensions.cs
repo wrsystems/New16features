@@ -20,6 +20,10 @@ namespace API.Extensions
             services.AddScoped<IMessageRepository, MessageRepository>();
 
             // added 11-03
+            services.AddScoped<IEntryRepository, EntryRepository>();
+            services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+
+            // added 11-03
             services.AddScoped<IFlakRepository, FlakRepository>();
 
             services.AddScoped<LogUserActivity>();

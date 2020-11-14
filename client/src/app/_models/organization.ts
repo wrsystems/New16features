@@ -1,0 +1,29 @@
+export interface Organization {
+  id: number;
+  sourceId: string;
+  orgName: string;
+  mailAddress: string;
+  mailCity: string;
+  mailState: string;
+  mailZipcode: string;
+  legalName: string;
+  address: string;
+  city: string;
+  state: string;
+  zipcode: string;
+  phone: string;
+  secondAddress: string;
+  sICCode: string;
+  sICName: string;
+  title: string;
+  contactName: string;
+  contactPhone: string;
+  contactAreaCode: string;
+  contactPhoneSeven: string;
+  businessCategory: string;
+  businessSize: string;
+  sourceName: string;
+  parentOrgId: number;
+  email: string;
+  photoId: number;
+}

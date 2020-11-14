@@ -40,6 +40,8 @@ import { FlakHomeComponent } from './flak/flak-home/flak-home.component';
 import { FlakDetailComponent } from './flak/flak-detail/flak-detail.component';
 import { FlakCardComponent } from './flak/flak-card/flak-card.component';
 import { NavMineComponent } from './nav-mine/nav-mine.component';
+import { EntrysListComponent } from './entrys/entrys-list/entrys-list.component';
+import { OrgListComponent } from './org/org-list/org-list.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +72,9 @@ import { NavMineComponent } from './nav-mine/nav-mine.component';
     FlakHomeComponent,
     FlakDetailComponent,
     FlakCardComponent,
-    NavMineComponent
+    NavMineComponent,
+    EntrysListComponent,
+    OrgListComponent
    ],
   imports: [
     BrowserModule,
