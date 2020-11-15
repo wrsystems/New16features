@@ -42,6 +42,7 @@ import { FlakCardComponent } from './flak/flak-card/flak-card.component';
 import { NavMineComponent } from './nav-mine/nav-mine.component';
 import { EntrysListComponent } from './entrys/entrys-list/entrys-list.component';
 import { OrgListComponent } from './org/org-list/org-list.component';
+import { EntrysCardComponent } from './entrys/entrys-card/entrys-card.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { OrgListComponent } from './org/org-list/org-list.component';
     FlakCardComponent,
     NavMineComponent,
     EntrysListComponent,
-    OrgListComponent
+    OrgListComponent,
+    EntrysCardComponent
    ],
   imports: [
     BrowserModule,

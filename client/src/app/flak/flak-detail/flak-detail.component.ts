@@ -20,17 +20,16 @@ export class FlakDetailComponent implements OnInit {
   activeTab: TabDirective;
   messages: Message[] = [];
 
-  constructor(private memberService: MembersService, private route: ActivatedRoute,
-    private messageService: MessageService) { }
+  constructor(private memberService: MembersService, private route: ActivatedRoute, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.route.data.subscribe(data => {
       this.member = data.member;
-    })
+    });
 
     this.route.queryParams.subscribe(params => {
       params.tab ? this.selectTab(params.tab) : this.selectTab(0);
-    })
+    });
 
     this.galleryOptions = [
       {
@@ -41,7 +40,7 @@ export class FlakDetailComponent implements OnInit {
         imageAnimation: NgxGalleryAnimation.Slide,
         preview: false
       }
-    ]
+    ];
 
     this.galleryImages = this.getImages();
   }
@@ -53,7 +52,7 @@ export class FlakDetailComponent implements OnInit {
         small: photo?.url,
         medium: photo?.url,
         big: photo?.url
-      })
+      });
     }
     return imageUrls;
   }
@@ -61,7 +60,7 @@ export class FlakDetailComponent implements OnInit {
   loadMessages() {
     this.messageService.getMessageThread(this.member.username).subscribe(messages => {
       this.messages = messages;
-    })
+    });
   }
 
   selectTab(tabId: number) {
