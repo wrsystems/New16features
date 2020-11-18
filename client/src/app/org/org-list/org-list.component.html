@@ -1,1 +1,25 @@
 <p>org-list works!</p>
+
+<!-- <h2> no match value {{noMatch}} </h2> -->
+
+  <!-- <div class="card-footer">
+      <div class="btn-group d-flex">
+          <button class="btn btn-primary"> Topper button Like</button>
+          <button (click)="listEntry()" class="btn btn-success"> Get Subject Another button </button>
+      </div>
+  </div> -->
+
+<div>
+  <div *ngFor="let org of organizations" >
+    <strong>Organization Name:</strong>
+    <p>Should be orgname value {{org?.orgName}}</p>
+    <strong>Address:</strong>
+    <p>Should be address value {{org?.address}}</p>
+    <strong>City:</strong>
+    <p>Should be city value {{org?.city}}</p>
+  </div>
+</div>
+
+
+
+

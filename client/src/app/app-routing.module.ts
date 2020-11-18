@@ -17,6 +17,8 @@ import { AdminGuard } from './_guards/admin.guard';
 
 import { FlakFlaksComponent } from './flak/flak-flaks/flak-flaks.component';
 import { FlakHomeComponent } from './flak/flak-home/flak-home.component';
+import { EntrysListComponent } from './entrys/entrys-list/entrys-list.component';
+import { OrgListComponent } from './org/org-list/org-list.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -31,8 +33,11 @@ const routes: Routes = [
       {path: 'lists', component: ListsComponent},
       {path: 'messages', component: MessagesComponent},
 
-      // Added 11-04
-      {path: 'flaks', component: FlakFlaksComponent},
+      // added 11/15
+      {path: 'orgs', component: OrgListComponent},
+      {path: 'entrys', component: EntrysListComponent},
+      // Added 11-04 taken out 11/15
+      // {path: 'flaks', component: FlakFlaksComponent},
       // Added 11-10
       {path: 'flakcards', component: FlakHomeComponent},
       {path: 'admin', component: AdminPanelComponent, canActivate: [AdminGuard]},

@@ -28,35 +28,35 @@ namespace API.Controllers
         // private static readonly int myuser8 = 8;  // assign variable a value 11/13
 
     // *******************  First endpoint
-        // [HttpPost]
-        // public async Task<ActionResult<EntryDto>> CreateEntry(CreateEntryDto createEntryDto)
-        // {
-        //     var username = User.GetUsername();
+        [HttpPost]
+        public async Task<ActionResult<EntryDto>> AddEntry(EntryPostDto entryPostDto)
+        {
+            // var username = User.GetUsername();
 
-        //     if (username == createEntryDto.RecipientUsername.ToLower())
-        //         return BadRequest("You cannot send EntryS !! to yourself dumbhead ");
+            // if (username == createEntryDto.RecipientUsername.ToLower())
+            //     return BadRequest("You cannot send EntryS !! to yourself dumbhead ");
 
-        //     var sender = await _userRepository.GetUserByUsernameAsync(username);
-        //     var recipient = await _userRepository.GetUserByUsernameAsync(createEntryDto.RecipientUsername);
+            // var sender = await _userRepository.GetUserByUsernameAsync(username);
+            // var recipient = await _userRepository.GetUserByUsernameAsync(createEntryDto.RecipientUsername);
 
-        //     if (recipient == null) return NotFound();
+            // if (recipient == null) return NotFound();
 
-        //     var entry = new Entry
-        //     {
-        //         Sender = sender,
-        //         Recipient = recipient,
-        //         SenderUsername = sender.UserName,
-        //         RecipientUsername = recipient.UserName,
-        //         Content = createEntryDto.Content
-        //     };
+            var entry = new Entry
+            {
+                Subject = entryPostDto.Subject,
+                Content = entryPostDto.Content,
+                OrgName = entryPostDto.OrgName,
+                // OrgId = entryPostDto.OrgId,
+                // UseAnony = entryPostDto.UseAnony
+            };
 
-        //     _entryRepository.AddEntry(entry);
+            _entryRepository.AddEntry(entry);
 
-        //     if (await _entryRepository.SaveAllAsync()) return Ok(_mapper.Map<EntryDto>(entry));
+            if (await _entryRepository.SaveAllAsync()) return Ok(_mapper.Map<EntryDto>(entry));
 
-        //     return BadRequest("Failed to send Entry !! ");
+            return BadRequest("Failed to send Entry !! ");
 
-        // }
+        }
 
 
         // *******************  Third endpoint

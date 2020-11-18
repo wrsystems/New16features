@@ -2,11 +2,12 @@ import { Component, Input, OnInit, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-text-input',
-  templateUrl: './text-input.component.html',
-  styleUrls: ['./text-input.component.css']
+  selector: 'app-entry-input',
+  templateUrl: './entry-input.component.html',
+  styleUrls: ['./entry-input.component.css']
 })
-export class TextInputComponent implements ControlValueAccessor {
+
+export class EntryInputComponent implements ControlValueAccessor {
   @Input() label: string;
   @Input() type = 'text';
 
@@ -24,3 +25,5 @@ export class TextInputComponent implements ControlValueAccessor {
   }
 
 }
+
+

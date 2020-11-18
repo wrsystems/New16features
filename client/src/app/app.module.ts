@@ -42,7 +42,11 @@ import { FlakCardComponent } from './flak/flak-card/flak-card.component';
 import { NavMineComponent } from './nav-mine/nav-mine.component';
 import { EntrysListComponent } from './entrys/entrys-list/entrys-list.component';
 import { OrgListComponent } from './org/org-list/org-list.component';
-import { EntrysCardComponent } from './entrys/entrys-card/entrys-card.component';
+import { EntrysFormComponent } from './entrys/entrys-form/entrys-form.component';
+import { OrgFormComponent } from './org/org-form/org-form.component';
+import { EntrysTryComponent } from './entrys/entrys-try/entrys-try.component';
+import { EntrysCopych6Component } from './entrys/entrys-copych6/entrys-copych6.component';
+import { EntryInputComponent } from './entrys/entry-input/entry-input.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +80,11 @@ import { EntrysCardComponent } from './entrys/entrys-card/entrys-card.component'
     NavMineComponent,
     EntrysListComponent,
     OrgListComponent,
-    EntrysCardComponent
+    EntrysFormComponent,
+    OrgFormComponent,
+    EntrysTryComponent,
+    EntrysCopych6Component,
+    EntryInputComponent
    ],
   imports: [
     BrowserModule,

@@ -33,6 +33,9 @@ namespace API.Helpers
             // 11/12 need organization, entry added guess order is <source, destination> revised 11/13
             CreateMap<Organization, OrganizationDto>();
             CreateMap<Entry, EntryDto>();
+
+            // 11/16 need to post entry added guess order is <source, destination> revised 11/13
+            CreateMap<Entry, EntryDto>();
         }
     }
 }
