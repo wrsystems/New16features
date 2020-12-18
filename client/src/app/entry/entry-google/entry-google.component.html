@@ -1,0 +1,59 @@
+<!-- <p>entry-google works!</p> -->
+
+<!-- <div>
+  <h2>Any Address Home, Establishment, Whatever See if valid by getting return:</h2>
+  <p>
+    <AutocompleteComponent (setAddress)="getAddress($event)" adressType="geocode"></AutocompleteComponent>
+  </p>
+  <b>Address: </b> {{formattedAddress}}
+  <br><br>
+</div> -->
+
+<div *ngIf="!submitted"  >
+  <h6>Type in business name & select from dropdown list:</h6>
+
+  <p>
+    <AutocompleteComponent (setAddress)="getEstablishmentAddress($event)"
+    adressType="establishment"
+    ></AutocompleteComponent>
+  </p>
+
+  Company Name : {{gname}}
+  <br>
+  Address: {{formattedEstablishmentAddress}}
+
+  <div class="text-center">
+    <button class="btn btn-primary mr-1" type="submit" (click)="addNewPlace()"> Submit</button>
+    <button class="btn btn-secondary" type="reset" (click)="onReset()">Clear Form</button>
+  </div>
+
+</div>
+
+  <div *ngIf="placeDetail" >
+    The Address : {{formattedEstablishmentAddress}}
+    <br>
+    postCode     : {{postCode}}
+    <br>
+    Company Name : {{gname}}
+    <br>
+    Place Id     : {{placeId}}
+    <br>
+    Street Number: {{streetNumber}}
+    <br>
+    Street        : {{street}}
+    <br>
+    City   : {{city}}
+    <br>
+    State  : {{state}}
+    <br>
+    Country  : {{country}}
+    <br>
+    CountryShort : {{countryShort}}
+    <br>
+    Place URL  : {{placeUrl}}
+    <br>
+    Phone: {{phone}}
+  </div>
+
+
+

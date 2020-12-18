@@ -1,5 +1,6 @@
 // 11/17 Sridhar is source of base code
 // 11/17 copied in entrys-form (which is edited from neil register)
+// 12-06 code is used as entry form for three fields
 
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { EntryService } from '../../_services/entry.service';
@@ -51,7 +52,8 @@ export class EntrysTryComponent implements OnInit {
     // registerForm = new FormGroup({
       subject: ['', Validators.required],
       content: ['', Validators.required],
-      orgname: ['', Validators.required]
+      orgname: ['', Validators.required],
+      starRating: ['', Validators.required],
     });
   }
     // this.entryForm = this.fb.group({
@@ -63,12 +65,21 @@ export class EntrysTryComponent implements OnInit {
     //   OrgName: ['', Validators.required]
     // });
 
+  doNothing() {
+    console.log('Do Nothing Method');
+  }
+
   postEntry() {
-    console.log(this.entryForm.value);
+    // console.log(this.entryForm.value);  take out because the following three lines worked 12-06
+    console.log(' try subject ', this.entryForm.value.subject);
+    console.log(' try content ', this.entryForm.value.content);
+    console.log(' try orgname ', this.entryForm.value.orgname);
+    console.log(' try starRating ', this.entryForm.value.starRating);
+    console.log(' forms object ', this.entryForm);
 
     this.entryService.postEntry(this.entryForm.value).subscribe(response => {
         console.log('Got to line after postEntry');
-        this.router.navigateByUrl('/members');
+        // this.router.navigateByUrl('/members');
       }, error => {
         this.validationErrors = error;
       });

@@ -19,6 +19,9 @@ namespace API.Extensions
             services.AddScoped<ILikesRepository, LikesRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
 
+            // added 12-7
+            services.AddScoped<IGplaceRepository, GplaceRepository>();
+
             // added 11-03
             services.AddScoped<IEntryRepository, EntryRepository>();
             services.AddScoped<IOrganizationRepository, OrganizationRepository>();

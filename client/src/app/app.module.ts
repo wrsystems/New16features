@@ -1,3 +1,4 @@
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -47,6 +48,19 @@ import { OrgFormComponent } from './org/org-form/org-form.component';
 import { EntrysTryComponent } from './entrys/entrys-try/entrys-try.component';
 import { EntrysCopych6Component } from './entrys/entrys-copych6/entrys-copych6.component';
 import { EntryInputComponent } from './entrys/entry-input/entry-input.component';
+// import { ItemDetailComponent } from './item/item-detail/item-detail.component';
+// import { ItemOutputComponent } from './item/item-output/item-output.component';
+
+// tried on 12-16 no luck, reversed
+// import { AngularMaterialModule } from './app.material.module';
+// import { AppNeilModule } from './app.neil.module';
+
+import { AutocompleteComponent } from './entry/google-places/google-places.component';
+import { EntryGoogleComponent } from './entry/entry-google/entry-google.component';
+import { EntryListComponent } from './entry/entry-list/entry-list.component';
+import { EntryMessageComponent } from './entry/entry-message/entry-message.component';
+// add 12-17
+import { EntryJsontestComponent } from './entry/entry-jsontest/entry-jsontest.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +98,14 @@ import { EntryInputComponent } from './entrys/entry-input/entry-input.component'
     OrgFormComponent,
     EntrysTryComponent,
     EntrysCopych6Component,
-    EntryInputComponent
+    EntryInputComponent,
+    // ItemDetailComponent,
+    // ItemOutputComponent
+    AutocompleteComponent,
+    EntryGoogleComponent,
+    EntryListComponent,
+    EntryMessageComponent,
+    EntryJsontestComponent,
    ],
   imports: [
     BrowserModule,
@@ -94,7 +115,9 @@ import { EntryInputComponent } from './entrys/entry-input/entry-input.component'
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    // AngularMaterialModule,
+    // AppNeilModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},

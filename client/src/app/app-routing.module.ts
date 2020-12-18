@@ -15,10 +15,11 @@ import { MemberDetailedResolver } from './_resolvers/member-detailed.resolver';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { AdminGuard } from './_guards/admin.guard';
 
-import { FlakFlaksComponent } from './flak/flak-flaks/flak-flaks.component';
+// import { FlakFlaksComponent } from './flak/flak-flaks/flak-flaks.component';
 import { FlakHomeComponent } from './flak/flak-home/flak-home.component';
-import { EntrysListComponent } from './entrys/entrys-list/entrys-list.component';
+// import { EntrysListComponent } from './entrys/entrys-list/entrys-list.component';
 import { OrgListComponent } from './org/org-list/org-list.component';
+import { EntryListComponent } from './entry/entry-list/entry-list.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -35,7 +36,10 @@ const routes: Routes = [
 
       // added 11/15
       {path: 'orgs', component: OrgListComponent},
-      {path: 'entrys', component: EntrysListComponent},
+
+      // modified 12-16 from entrys to entry (no s) with google copied from ggmapext
+      {path: 'entry', component: EntryListComponent},
+
       // Added 11-04 taken out 11/15
       // {path: 'flaks', component: FlakFlaksComponent},
       // Added 11-10

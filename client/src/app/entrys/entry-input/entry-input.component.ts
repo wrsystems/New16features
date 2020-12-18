@@ -1,3 +1,6 @@
+
+// 12-06 code is not now used - unsure of source
+
 import { Component, Input, OnInit, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 

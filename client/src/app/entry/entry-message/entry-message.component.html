@@ -1,0 +1,67 @@
+<!-- <p> entry-message works!</p> -->
+<!-- copied from jlogon modified 12-14 -->
+
+<!-- main app container -->
+<div *ngIf="!submitted && entry.sentToFlak" class="card m-3">
+
+  <h5 class="card-header">Bobbys Hopefull Reactive Form</h5>
+  <div class="card-body">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-row">
+              <div class="form-group col-10">
+                  <label>Subject</label>
+                  <input type="text" formControlName="subject" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.subject.errors }" />
+                  <div *ngIf="submitted && f.subject.errors" class="invalid-feedback">
+                      <div *ngIf="f.subject.errors.required">Subject is required</div>
+                  </div>
+              </div>
+        </div>
+
+        <div class="form-row">
+              <div class="form-group col-10">
+                  <label>Content</label>
+                  <input type="text" formControlName="content" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.content.errors }" />
+                  <div *ngIf="submitted && f.content.errors" class="invalid-feedback">
+                      <div *ngIf="f.content.errors.required">Content is required</div>
+                  </div>
+              </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col">
+            <label>Star Rating</label>
+            <select formControlName="starRating" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.starRating.errors }">
+                <option value="1">1 - Lowest</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 - Highest</option>
+            </select>
+              <div *ngIf="submitted && f.starRating.errors" class="invalid-feedback">
+                <div *ngIf="f.starRating.errors.required">Star rating is required</div>
+              </div>
+            </div>
+        </div>
+
+          <div class="form-group form-check">
+              <input type="checkbox" formControlName="useAnony" id="useAnomy" class="form-check-input" [ngClass]="{ 'is-invalid': submitted && f.useAnomy.errors }" />
+              <label for="useAnomy" class="form-check-label">Accept To Use Anomy</label>
+              <div *ngIf="submitted && f.useAnomy.errors" class="invalid-feedback">Accept To Use Anomy Is Required</div>
+          </div>
+
+        <div class="text-center">
+              <button class="btn btn-primary mr-1">Submit</button>
+              <button class="btn btn-secondary" type="reset" (click)="onReset()">Clear Form</button>
+        </div>
+
+    </form>
+  </div>
+</div>
+
+<!-- credits -->
+<!-- <div class="text-center">
+  <p>
+      WRS Technology Inc
+  </p>
+</div> -->

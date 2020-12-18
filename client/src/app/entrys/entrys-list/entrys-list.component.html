@@ -23,7 +23,6 @@
 
 <app-entrys-try> </app-entrys-try>
 
-
   <div >
     <div *ngFor="let entry of entrys" >
       <strong>Subject:</strong>
@@ -34,6 +33,13 @@
       <p>Should be value {{entry?.userName}}</p>
         <!-- <app-entrys-card>  [entry]="entry"  </app-entrys-card> -->
     </div>
+  </div>
+
+  <div class="card-footer">
+      <div class="btn-group d-flex">
+          <!-- <button class="btn btn-primary"> Push To advance </button> -->
+          <button (click)="listEntry()" class="btn btn-success"> Button list-entry.html </button>
+      </div>
   </div>
 
 

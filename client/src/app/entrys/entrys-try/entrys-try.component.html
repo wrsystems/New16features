@@ -15,6 +15,9 @@
     <app-entry-input [formControl]='entryForm.controls["orgname"]'
       [label]='"OrgName"'></app-entry-input>
 
+    <app-entry-input [formControl]='entryForm.controls["starRating"]'
+      [label]='"StarRating"'></app-entry-input>
+
     <!-- <div div class="form-group">
       <label for="subject">Subject</label><br>
       <input type="text" formControlName="subject" class="form-control">
@@ -46,7 +49,11 @@
   </form>
 </div>
 
------------------------------------------------------------------------------
+<div class="card-footer">
+  <div class="btn-group d-flex">
+      <button (click)="doNothing()" class="btn btn-success"> Button to advance list-try.html </button>
+  </div>
+</div>
 
 <!-- 11/16 copied from register -->
 

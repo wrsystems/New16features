@@ -17,7 +17,11 @@ export class EntryService {
   constructor(private http: HttpClient) { }
 
   getEntrySubject(subject: string) {
-    return this.http.get<Entry[]>(this.baseUrl + 'entrys/subject/' + subject);
+    return this.http.get<Entry>(this.baseUrl + 'entrys/subject/' + subject);
+
+    // specifys as []
+    // return this.http.get<Entry[]>(this.baseUrl + 'entrys/subject/' + subject);
+
   }
 
   // postEntry(model: any) {
@@ -27,6 +31,7 @@ export class EntryService {
   postEntry(model: any) {
     return this.http.post(this.baseUrl + 'entrys', model).pipe(
       map((user: Entry) => {
+        console.log(' bbbbb', user)
         if (user) {
           console.log('In Entry Service, apparently not null or void')
         //  this.setCurrentUser(user);

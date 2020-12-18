@@ -1,7 +1,7 @@
 // 11/14 added lots ?
 export interface Entry {
-  id: number;
-  created?: string;
+  // id?: number;
+  dateCreated?: string;
   sentToFlak?: boolean;
   dateSentToFlak?: string;
   orgId?: number;
@@ -16,4 +16,7 @@ export interface Entry {
   useEmail?: boolean;
   useAddress?: boolean;
   useAll?: boolean;
+  usePhone?: boolean;
+  placeId?: string;
+  formSubmitted?: boolean;
 }

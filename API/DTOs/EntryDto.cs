@@ -5,12 +5,13 @@ namespace API.DTOs
     public class EntryDto
     {
         public int Id { get; set; }
-        public DateTime? Created { get; set; } = DateTime.Now;
+        public DateTime? DateCreated { get; set; } = DateTime.Now;
         public bool SentToFlak { get; set; }
         public DateTime DateSentToFlak { get; set; }
 
         public int OrgId { get; set; }
         public string OrgName { get; set; }
+        public string PlaceId { get; set; }
         public string Subject { get; set; }
         public string Content { get; set; }
         public string StarRating { get; set; }
@@ -23,5 +24,7 @@ namespace API.DTOs
         public bool UseEmail { get; set; }
         public bool UseAddress { get; set; }
         public bool UseAll { get; set; }
+         public bool UsePhone { get; set; }
+        public string FormSubmitted { get; set; }
     }
 }

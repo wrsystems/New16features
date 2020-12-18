@@ -13,6 +13,7 @@
 <!-- If NOT logged in (meaning null) determined by currentUser$ set in AccountService Then FORM -->
 
   <div *ngIf="(accountService.currentUser$ | async) === null" >
+
     <div class="d-flex justify-content-center mt-5">
       <div class ="col-3">
         <form #loginForm="ngForm" (ngSubmit)="login()">
@@ -26,13 +27,18 @@
               [(ngModel)]="model.username"
               class="form-control mr-sm-2"
               type="text"
-              placeholder="Username">
+              placeholder="Username"
+              autocomplete = "username"
+              >
+                 <!-- added 11-26 for new autocomplete warning or error -->
           <input
               name="password"
               [(ngModel)]="model.password"
               class="form-control mr-sm-2"
               type="password"
-              placeholder="Password">
+              placeholder="Password"
+              autocomplete="current-password"
+              >
             <button class="btn btn-success my-2 my-sm-0" type="submit" >Login </button>
           </form>
       </div>

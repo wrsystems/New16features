@@ -47,7 +47,7 @@ namespace API.Data
         {
 
                 Console.WriteLine(" ********************** ");
-                Console.WriteLine("Entrys Repository", username);
+                Console.WriteLine(" Entrys Repository", username);
                 Console.WriteLine(" ********************** ");
 
         // Note: think context.Entrys means specific db table
@@ -71,7 +71,7 @@ namespace API.Data
         {
 
                 Console.WriteLine(" ********************** ");
-                Console.WriteLine("Entrys Repository AsyncEntry ", username);
+                Console.WriteLine(" Entrys Repository AsyncEntry ", username);
                 Console.WriteLine(" ********************** ");
 
             return await _context.Users

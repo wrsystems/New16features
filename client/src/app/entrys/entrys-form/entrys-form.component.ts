@@ -1,4 +1,5 @@
 // 11/16 copied from register.ts
+// 12-06 code not now used
 
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { EntryService } from '../../_services/entry.service';

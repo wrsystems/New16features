@@ -1,4 +1,5 @@
 // 11/17 copied from ch6 valerio component register
+// 12-06 code is not now used
 
 import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';

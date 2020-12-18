@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.DTOs;
@@ -41,24 +42,51 @@ namespace API.Controllers
 
             // if (recipient == null) return NotFound();
 
+
+                Console.WriteLine(" ********************** ");
+                Console.WriteLine(" ** From Entrs Controller POST ** ");
+                // Console.WriteLine(" Entrys Repository AsyncEntry ", username);
+                Console.WriteLine(" ********************** ");
+
+            // look-up username from the token in ClaimsPrincipleExtensions
+            var user = await _entryRepository.GetUserByUsernameAsyncEntry(User.GetUsername());
+            var currentUsername = user.UserName;
+
             var entry = new Entry
             {
                 Subject = entryPostDto.Subject,
                 Content = entryPostDto.Content,
                 OrgName = entryPostDto.OrgName,
-                // OrgId = entryPostDto.OrgId,
-                // UseAnony = entryPostDto.UseAnony
+                OrgId = entryPostDto.OrgId,
+                UseAnony = entryPostDto.UseAnony,
+                SentToFlak = entryPostDto.SentToFlak,
+                PlaceId = entryPostDto.PlaceId,
+                FormSubmitted = entryPostDto.FormSubmitted,
+                StarRating = entryPostDto.StarRating,
+                // UserId = entryPostDto.UserId,
+                // UserName = entryPostDto.UserName,
+                UserId = user.Id,
+                UserName = user.UserName,
+
+                UserDeleted = entryPostDto.UserDeleted,
+                UseEmail = entryPostDto.UseEmail,
+                UseAddress = entryPostDto.UseAddress,
+                UsePhone = entryPostDto.UsePhone,
+                UseAll = entryPostDto.UseAll
+
             };
+
+            // _mapper.Map(entryPostDto, entry);  // not yet work: missing type map configuration
 
             _entryRepository.AddEntry(entry);
 
             if (await _entryRepository.SaveAllAsync()) return Ok(_mapper.Map<EntryDto>(entry));
 
-            return BadRequest("Failed to send Entry !! ");
+            return BadRequest("Failed to save the POSTED Entry !! ");
 
         }
 
-
+ 
         // *******************  Third endpoint
         [HttpGet("subject/{subject}")]
         public async Task<ActionResult<IEnumerable<EntryDto>>> GetEntryBySubject(string subject)
