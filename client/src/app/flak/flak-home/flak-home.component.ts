@@ -14,10 +14,12 @@ export class FlakHomeComponent implements OnInit {
 
   flaks: Flak[] = [];
   pagination: Pagination;
-  container = 'Unread';
+  container = 'Inbox';
   pageNumber = 1;
   pageSize = 5;
   loading = false;
+  hardUsername = 'todd';  // for testing
+  organizations: Flak[];  // for testing
 
   constructor(private flakService: FlakService) { }
 
@@ -31,6 +33,19 @@ export class FlakHomeComponent implements OnInit {
       this.flaks = response.result;
       this.pagination = response.pagination;
       this.loading = false;
+
+      // console.log('Flak pagination : ', response.result)
+      // this.listFlak();  // for testing
+
+    });
+  }
+
+  listFlak() {
+    this.flakService.getFlakThread(this.hardUsername).subscribe(result => {
+        // this.noMatch = '';
+        this.organizations = result;
+        console.log('I am here to list ruthie :', this.organizations );
+
     });
   }
 

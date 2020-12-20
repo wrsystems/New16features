@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.DTOs;
@@ -46,8 +47,20 @@ namespace API.Controllers
                 Gname = gplacePostDto.Gname,
                 FullAddress = gplacePostDto.FullAddress,
                 PostCode = gplacePostDto.PostCode,
-                // OrgId = entryPostDto.OrgId,
-                // UseAnony = entryPostDto.UseAnony
+                PlaceId = gplacePostDto.PlaceId,
+                FullDescription = gplacePostDto.FullDescription,
+                Phone = gplacePostDto.Phone,
+                StreetNumber = gplacePostDto.StreetNumber,
+                Street = gplacePostDto.Street,
+                City = gplacePostDto.City,
+                State = gplacePostDto.State,
+                Country = gplacePostDto.Country,
+                CountryShort = gplacePostDto.CountryShort,
+                PlaceUrl = gplacePostDto.PlaceUrl,
+                FormSubmitted = gplacePostDto.FormSubmitted,
+                UseOrg = gplacePostDto.UseOrg,
+                OrgId = gplacePostDto.OrgId
+
             };
 
             _gplaceRepository.AddGplace(gplace);

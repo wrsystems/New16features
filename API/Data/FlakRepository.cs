@@ -10,6 +10,8 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
+// Note 12-19 code was copied from messageRepository.cs
+
 namespace API.Data
 {
     public class FlakRepository : IFlakRepository
@@ -46,23 +48,29 @@ namespace API.Data
         public async Task<PagedList<FlakDto>> GetFlaksForUser(FlakParams flakParams)
         {
             var query = _context.Flaks
+                
                 .Where(m=>m.Sender.UserName == flakParams.Username )  // 11-10 I added this !!!! Worked
                 .OrderByDescending(m => m.FlakSent)
                 .AsQueryable();
 
-            query = flakParams.Container switch
-            {
-                "Inbox" => query.Where(u => u.Recipient.UserName == flakParams.Username 
-                    && u.RecipientDeleted == false),
-                "Outbox" => query.Where(u => u.Sender.UserName == flakParams.Username
-                    && u.SenderDeleted == false),
-                _ => query.Where(u => u.Recipient.UserName ==
-                    flakParams.Username && u.RecipientDeleted == false && u.DateRead == null)
-            };
+            // changed 12-19 
+            // query = query.Where(u => u.Recipient.UserName == flakParams.Username 
+            //         && u.RecipientDeleted == false);
 
             var flaks = query.ProjectTo<FlakDto>(_mapper.ConfigurationProvider);
 
             return await PagedList<FlakDto>.CreateAsync(flaks, flakParams.PageNumber, flakParams.PageSize);
+
+            // 12-19 out, change above to not use cntainer value
+            // query = flakParams.Container switch
+            // {
+            //     "Inbox" => query.Where(u => u.Recipient.UserName == flakParams.Username 
+            //         && u.RecipientDeleted == false),
+            //     "Outbox" => query.Where(u => u.Sender.UserName == flakParams.Username
+            //         && u.SenderDeleted == false),
+            //     _ => query.Where(u => u.Recipient.UserName ==
+            //         flakParams.Username && u.RecipientDeleted == false && u.DateRead == null)
+            // };
 
         }
 
@@ -95,6 +103,19 @@ namespace API.Data
             // }
 
             return _mapper.Map<IEnumerable<FlakDto>>(flaks);
+        }
+
+        // copied from entry repro and renamed flak 12-19 NOT USED, TAKE OUT !!
+        // copied user repro and renamed "Entry" 11/13
+        public async Task<AppUser> GetUserByUsernameAsyncFlak(string username)
+        {
+
+                // Console.WriteLine(" ********************** ");
+                // Console.WriteLine(" Flak Repository AsyncEntry ", username);
+                // Console.WriteLine(" ********************** ");
+
+            return await _context.Users
+                .SingleOrDefaultAsync(x => x.UserName == username);
         }
 
         public async Task<bool> SaveAllAsync()

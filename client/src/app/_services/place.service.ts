@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Entry } from '../_models/entry';
-
+import { Place } from '../_models/place';
 
 import { map } from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs';
@@ -11,13 +10,14 @@ import { ReplaySubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class EntryService {
+
+export class PlaceService {
   baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
-  getEntrySubject(subject: string) {
-    return this.http.get<Entry>(this.baseUrl + 'entrys/subject/' + subject);
+  getPlaceSubject(subject: string) {
+    return this.http.get<Place>(this.baseUrl + 'gplaces/subject/' + subject);
 
     // specifys as []
     // return this.http.get<Entry[]>(this.baseUrl + 'entrys/subject/' + subject);
@@ -28,12 +28,13 @@ export class EntryService {
   //   return this.http.post(this.baseUrl + 'entrys', model);
   // }
 
-  postEntry(model: any) {
-    return this.http.post(this.baseUrl + 'entrys', model).pipe(
-      map((user: Entry) => {
-        // console.log(' bbbbb', user)
+  postPlace(model: any) {
+    // console.log('In places.service at start of postIt ')
+    return this.http.post(this.baseUrl + 'gplace', model).pipe(
+      map((user: Place) => {
+        // console.log(' pppppp ', user)
         if (user) {
-          // console.log('In Entry Service, apparently not null or void')
+          // console.log('In Place Service, apparently not null or void')
         //  this.setCurrentUser(user);
         }
       })

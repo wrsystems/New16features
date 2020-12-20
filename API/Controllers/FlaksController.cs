@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.DTOs;
@@ -8,6 +9,8 @@ using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
+// 12-19 note: code was copied from messageController.cs
 
 namespace API.Controllers
 {
@@ -63,7 +66,13 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<FlakDto>>> GetFlaksForUser([FromQuery] 
             FlakParams flakParams)
         {
-            flakParams.Username = User.GetUsername();
+            // flakParams.Username = "ruthie";  // only for testing 
+            flakParams.Username = User.GetUsername(); // 12-19 this should work, function is in ...look at definition
+
+                Console.WriteLine(" ********************** ");
+                Console.WriteLine(" ** From Flak Controller : ", flakParams.Username);
+                // Console.WriteLine(" Entrys Repository AsyncEntry ", username);
+                Console.WriteLine(" ********************** ");
 
             var flaks = await _flakRepository.GetFlaksForUser(flakParams);
 

@@ -5,6 +5,7 @@ import { Component, Input, OnInit } from '@angular/core'; // First, import Input
 import { Entry } from '../../_models/entry';
 import { Place } from '../../_models/place';
 import { EntryService } from '../../_services/entry.service';
+import { PlaceService } from '../../_services/place.service';
 import { User } from '../../_models/user';  // brought in to get username, probably better solution
 
 @Component({
@@ -35,12 +36,16 @@ export class EntryListComponent {
   myUserName: any;
 
   // added 12-16
-  constructor(private entryService: EntryService) { }
+  constructor(private entryService: EntryService, private placeService: PlaceService) { }
 
   ngOnInit() {
     this.passedEntry = this.entryOne;
     this.passedPlace = this.placeOne;  // same as for message
   }
+
+          // ************
+          // Entrys logic
+          // ************
 
   // Incoming emitted data stream FROM ENTRY-MESSAGE ************
   // method called from entry-list html involking entry-message
@@ -49,29 +54,34 @@ export class EntryListComponent {
     this.entryOne.sentToFlak = false;
     this.entryOne.formSubmitted = true;
     this.entryOne.placeId = this.placeOne.placeId;
-    this.readCurrentUser()
+    // this.readCurrentUser()  // dow done in controller 12-18
     this.entryOne.userName = this.myUserName;
     // this.entryOne.subject = entry.subject;
     // console.log('entry-list subject', this.entryOne.subject );
 
     Object.assign( this.entryOne, entry);
 
-    console.log('entry-list entryOne', this.entryOne );
+    // console.log('entry-list entryOne', this.entryOne );
     this.postEntry();
+
     // alert("Entry Saved");
   }
 
   postEntry() {
     // console.log(this.entryForm.value);  take out because the following three lines worked 12-06
-    console.log(' forms object in postEntry ', this.entryOne);
+    // console.log(' forms object in postEntry ', this.entryOne);
 
     this.entryService.postEntry(this.entryOne).subscribe(response => {
-        console.log('Got to line after postEntry');
+        // console.log('Got to line after postEntry');
         // this.router.navigateByUrl('/members');
       }, error => {
         this.validationErrors = error;
       });
-    }
+  }
+
+          // ************
+          // Gplace logic
+          // ************
 
   updatePlace(place: Place) {
 
@@ -81,28 +91,39 @@ export class EntryListComponent {
     // this.entryOne.formSubmitted = true;
     // this.passedEntry.formSubmitted = true;
 
-      console.log('entry-list place', place );
+      // console.log('entry-list place', place );
+      this.postPlace();
+  }
+
+  postPlace() {
+    // console.log(this.placeForm.value);  take out because the following three lines worked 12-06
+    // console.log(' forms object in postPlace ', this.placeOne);
+
+    this.placeService.postPlace(this.placeOne).subscribe(response => {
+        // console.log('Got to line after postPlace');
+        // this.router.navigateByUrl('/members');
+      }, error => {
+        this.validationErrors = error;
+      });
   }
 
   onSubmit() {
-    }
+  }
 
   onReset() {
-    }
-
-  // Here is my solution to get username from localStorage -- crude, needs to be redone
-  readCurrentUser() {
-    this.localValue = localStorage.getItem('user');  // just use the key (user) to get the string
-    console.log(' localvalue : ', this.localValue);
-    this.userObj = JSON.parse(this.localValue);
-    console.log(' From localStorage Object :', this.userObj)  // convert string into object
-
-    // Here is the value we need
-    this.myUserName = this.userObj.username
-    console.log('This this is the username : ', this.myUserName);
-
-    //  obj.birth = new Date(obj.birth);  // convert data string into date
-
   }
+
+  // This code works, but I replaced need for it with lookup logic inside controller  12-18
+  // Here is my solution to get username from localStorage -- crude, needs to be redone
+  // readCurrentUser() {
+  //   this.localValue = localStorage.getItem('user');  // just use the key (user) to get the string
+  //   console.log(' localvalue : ', this.localValue);
+  //   this.userObj = JSON.parse(this.localValue);
+  //   console.log(' From localStorage Object :', this.userObj)  // convert string into object
+  //   // Here is the value we need
+  //   this.myUserName = this.userObj.username
+  //   console.log('This this is the username : ', this.myUserName);
+  //   //  obj.birth = new Date(obj.birth);  // convert data string into date
+  // }
 
 };

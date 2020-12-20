@@ -16,10 +16,10 @@ namespace API.Data
         public DbSet<UserLike> Likes { get; set; }
         public DbSet<Message> Messages { get; set; }
 
-            // Gplaces added 12-7
+    // Gplaces added 12-7
         public DbSet<Gplace> Gplaces { get; set; }
 
-    // Flak added 11-12
+    // Entrys, Organization added 11-12
         public DbSet<Entry> Entrys { get; set; }
         public DbSet<Organization> Organizations { get; set; }
 

@@ -13,6 +13,7 @@ export class FlakService {
   constructor(private http: HttpClient) { }
 
   getFlaks(pageNumber, pageSize, container) {
+    // console.log('Flak Service called with pagenation ');
     let params = getPaginationHeaders(pageNumber, pageSize);
     params = params.append('Container', container);
     return getPaginatedResult<Flak[]>(this.baseUrl + 'flaks', params, this.http);
