@@ -34,7 +34,7 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // 12-17 copied from neil old #18 -- also added to proj file
+            // 12-17 copied from neil old #18 -- also added to project file
             services.AddControllers().AddNewtonsoftJson(opt => 
             {
                 opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;

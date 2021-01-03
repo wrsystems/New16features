@@ -1,6 +1,6 @@
 // 11/14 added lots ?
 export interface Entry {
-  // id?: number;
+  id: number;
   dateCreated?: string;
   sentToFlak?: boolean;
   dateSentToFlak?: string;

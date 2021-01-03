@@ -1,12 +1,19 @@
+
 export interface Flak {
     id: number;
-    senderId: number;
-    senderUsername: string;
-    senderPhotoUrl: string;
-    recipientId: number;
-    recipientUsername: string;
-    recipientPhotoUrl: string;
+    dateCreated: string;
+    dateFirstRead: string;
+    hasBeenRead: boolean;
+    userId: number;
+    userName: string;
+    orgId: number;
+    orgName: string;
+    subject: string;
     content: string;
-    dateRead?: Date;
-    flakSent: Date;
+    userCreated: boolean;
+    orgCreated: boolean;
+    userDeleted: boolean;
+    orgDeleted: boolean;
+    fhotoAdded: boolean;
+    entryId: number;
   }

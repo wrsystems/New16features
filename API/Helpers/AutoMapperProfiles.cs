@@ -22,13 +22,6 @@ namespace API.Helpers
                     src.Sender.Photos.FirstOrDefault(x => x.IsMain).Url))
                 .ForMember(dest => dest.RecipientPhotoUrl, opt => opt.MapFrom(src => 
                     src.Recipient.Photos.FirstOrDefault(x => x.IsMain).Url));
-
-        // added 11-03
-            CreateMap<Flak, FlakDto>()
-                .ForMember(dest => dest.SenderPhotoUrl, opt => opt.MapFrom(src => 
-                    src.Sender.Photos.FirstOrDefault(x => x.IsMain).Url))
-                .ForMember(dest => dest.RecipientPhotoUrl, opt => opt.MapFrom(src => 
-                    src.Recipient.Photos.FirstOrDefault(x => x.IsMain).Url));
             
             // 11/12 need organization, entry added guess order is <source, destination> revised 11/13
             CreateMap<Organization, OrganizationDto>();
@@ -39,6 +32,13 @@ namespace API.Helpers
 
             // 12/7 need to post Gplaces added guess order is <source, destination> 
             CreateMap<Gplace, GplaceDto>();
+
+            // 12/26 new
+            CreateMap<Flak, FlakDto>();    // updated 12-26
+
+            // 12/26 new
+            CreateMap<Fhoto, FhotoDto>();
+
 
         }
     }

@@ -86,8 +86,34 @@ namespace API.Controllers
 
         }
 
- 
-        // *******************  Third endpoint
+       // *******************  second endpoint (12-24 merged from old flak controller)
+       // 12-20 This is the main method for Entry to get cards *******************************************
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<EntryDto>>> GetEntryForUser([FromQuery] 
+            EntryParams entryParams)
+        {
+            // flakParams.Username = "ruthie";  // only for testing 
+            entryParams.Username = User.GetUsername(); // 12-19 this should work, function is in ...look at definition
+
+            var entrys = await _entryRepository.GetEntrysForUser(entryParams);
+
+            Response.AddPaginationHeader(entrys.CurrentPage, entrys.PageSize, 
+                entrys.TotalCount, entrys.TotalPages);
+
+            return entrys;
+        }
+
+        // *******************  Third endpoint (12-24 merged from old flak controller)
+        [HttpGet("username/{username}")]
+        public async Task<ActionResult<IEnumerable<EntryDto>>> GetEntryUsername(string username)
+        {
+            var currentUsername = User.GetUsername();
+
+            return Ok(await _entryRepository.GetEntryUsername(currentUsername));
+        }
+
+
+        // *******************  Forth endpoint
         [HttpGet("subject/{subject}")]
         public async Task<ActionResult<IEnumerable<EntryDto>>> GetEntryBySubject(string subject)
         {
@@ -99,6 +125,12 @@ namespace API.Controllers
             return Ok(await _entryRepository.GetEntryBySubject(currentUsername, subject));
         }
 
+        // *******************  Forth endpoint
+        [HttpGet("id/{id}")]
+        public async Task<ActionResult<IEnumerable<EntryDto>>> GetEntryById(int id)
+        {
+            return Ok(await _entryRepository.GetEntryById(id));
+        }
 
         // *******************  Fourth endpoint
         // [HttpDelete("{id}")]

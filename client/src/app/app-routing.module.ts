@@ -15,11 +15,34 @@ import { MemberDetailedResolver } from './_resolvers/member-detailed.resolver';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { AdminGuard } from './_guards/admin.guard';
 
-// import { FlakFlaksComponent } from './flak/flak-flaks/flak-flaks.component';
-import { FlakHomeComponent } from './flak/flak-home/flak-home.component';
-// import { EntrysListComponent } from './entrys/entrys-list/entrys-list.component';
 import { OrgListComponent } from './org/org-list/org-list.component';
-import { EntryListComponent } from './entry/entry-list/entry-list.component';
+// add 12-23
+import { FlakDetailedResolver } from './_resolvers/flak-detailed.resolver';
+
+
+// 1-2-21 renamed & new ALL ENTRY
+import { EntryFhotoLoaderComponent } from './entry/entry-fhoto-loader/entry-fhoto-loader.component';
+import { EntryFhotoEditComponent } from './entry/entry-fhoto-edit/entry-fhoto-edit.component';
+import { EntryHomeComponent } from './entry/entry-home/entry-home.component';
+import { EntryContentComponent } from './entry/entry-content/entry-content.component';
+import { EntryJsontestComponent } from './entry/entry-jsontest/entry-jsontest.component';
+import { EntryGoogleComponent } from './entry/entry-google/entry-google.component';
+import { AutocompleteComponent } from './entry/google-places/google-places.component';   // is GooglePlaceComponent
+import { EntryDetailComponent } from './entry/entry-detail/entry-detail.component';
+import { EntryFhotoResolver } from './_resolvers/entry-fhoto.resolver';
+
+// 1-2-21 renamed & new ALL REPLY
+import { ReplyDetailComponent } from './reply/reply-detail/reply-detail.component';
+import { FlaksDetailComponent } from './reply/flaks-detail/flaks-detail.component';
+import { FlakContentComponent } from './reply/flak-content/flak-content.component';
+import { ReplyHomeComponent } from './reply/reply-home/reply-home.component';
+import { ReplyCardComponent } from './reply/reply-card/reply-card.component';
+import { FlakFhotoLoaderComponent } from './reply/flak-fhoto-loader/flak-fhoto-loader.component';
+import { FlakFhotoEditComponent } from './reply/flak-fhoto-edit/flak-fhoto-edit.component';
+import { FlaksDetailResolver } from './_resolvers/flaks-detail.resolver';
+import { ReplyDetailResolver } from './_resolvers/reply-detail.resolver';
+
+
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -38,12 +61,17 @@ const routes: Routes = [
       {path: 'orgs', component: OrgListComponent},
 
       // modified 12-16 from entrys to entry (no s) with google copied from ggmapext
-      {path: 'entry', component: EntryListComponent},
+      {path: 'entry', component: EntryHomeComponent},
+      {path: 'efhoto/:id', component: EntryFhotoEditComponent, resolve: {entry: EntryFhotoResolver}},
 
-      // Added 11-04 taken out 11/15
-      // {path: 'flaks', component: FlakFlaksComponent},
-      // Added 11-10
-      {path: 'flakcards', component: FlakHomeComponent},
+   // added 12-24
+      {path: 'replycards', component: ReplyHomeComponent},
+      {path: 'reply/:id', component: ReplyDetailComponent, resolve: {entry: ReplyDetailResolver}},
+   // 12-28
+      {path: 'flak/:id', component: FlaksDetailComponent, resolve: {entry: FlaksDetailResolver}},
+   // 12-29
+      // {path: 'flak', component: FlakContentComponent},
+
       {path: 'admin', component: AdminPanelComponent, canActivate: [AdminGuard]},
     ]
   },

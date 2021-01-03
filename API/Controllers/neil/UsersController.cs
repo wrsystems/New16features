@@ -68,35 +68,49 @@ namespace API.Controllers
             return BadRequest("Failed to update user");
         }
 
+        // 12-31-20 review Neil #127 & add notes
+        // 
+
+
         [HttpPost("add-photo")]
-        public async Task<ActionResult<PhotoDto>> AddPhoto(IFormFile file)
+        public async Task<ActionResult<PhotoDto>> AddPhoto(IFormFile file)  // return PhotoDto  mthod name AddPhoto
+                    // get IformFile, call it file NICE AND SIMPLE, JUST TAKE IN FILE
         {
             var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
+            // above: 12-31 get username from claims principal using User.GetUsername()
+            // above: then goes to repo which matches on username and includes all of its photos from photo table
+            // above: not sure how the table joins are done in repo.
+            // above: returns AppUser which includes photo [] array.
 
             var result = await _photoService.AddPhotoAsync(file);
+            // above: variable for the result (json)
+            // above: accepts as input a file, uploads to Cloudinary & returns result (json) 
 
-            if (result.Error != null) return BadRequest(result.Error.Message);
+            if (result.Error != null) return BadRequest(result.Error.Message);  // check if error & include error message
+                    // above: not actually returning anything, but rather sending message BadRequest ?? lookup.
+                    // above: return aborts rest of processing.
 
-            var photo = new Photo
+            var photo = new Photo   // means we are going to add to database
             {
-                Url = result.SecureUrl.AbsoluteUri,
-                PublicId = result.PublicId
+                Url = result.SecureUrl.AbsoluteUri,   // get values from json
+                PublicId = result.PublicId            // get values from json
             };
 
-            if (user.Photos.Count == 0)
+            if (user.Photos.Count == 0)  // if first photo loaded, make it the main
             {
                 photo.IsMain = true;
             }
 
             user.Photos.Add(photo);
 
-            if (await _userRepository.SaveAllAsync())
+            if (await _userRepository.SaveAllAsync())  // think means to implement the "add" and return true when done
             {
                 return CreatedAtRoute("GetUser", new {username = user.UserName} ,_mapper.Map<PhotoDto>(photo));
+                // above: use mapper such that PhotoId contains fields we want from photo. (pass in the photo)
+
             }
                 
-
-            return BadRequest("Problem addding photo");
+                return BadRequest("Problem addding photo");  // if fails, return badrequest
         }
 
         [HttpPut("set-main-photo/{photoId}")]

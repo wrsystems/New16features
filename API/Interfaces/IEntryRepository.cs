@@ -14,5 +14,7 @@ namespace API.Interfaces
         Task<IEnumerable<EntryDto>> GetEntryBySubject(string currentUsername, string subject);
         Task<bool> SaveAllAsync();
         Task<AppUser> GetUserByUsernameAsyncEntry(string username);
+        Task<IEnumerable<EntryDto>> GetEntryUsername(string currentUsername);
+        Task<PagedList<EntryDto>> GetEntrysForUser(EntryParams entryParams);
     }
 }

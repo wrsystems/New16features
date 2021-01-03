@@ -20,6 +20,6 @@ namespace API.DTOs
         public string PlaceUrl { get; set; }
         public bool UseOrg { get; set; }
         public int OrgId { get; set; }
-        public string FormSubmitted { get; set; }
+        public bool FormSubmitted { get; set; }
     }
 }

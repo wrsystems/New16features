@@ -1,0 +1,53 @@
+<!-- 12-28 copied from entry-message -->
+<!-- copied from jlogon modified 12-14 -->
+
+
+<h3> Use Navigation Top Button For Next Choice </h3>
+
+<!-- main app container   note took out sentToFlak-->
+<div *ngIf="!submitted" class="card m-3">
+
+  <h5 class="card-header">Flaks Entry Reactive Form</h5>
+  <div class="card-body">
+    <form [formGroup]="flakForm" (ngSubmit)="onSubmit()">
+
+
+        <div class="form-row">
+            <div class="form-group col-10">
+                <label>Content</label>
+                <input type="text" formControlName="content" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.content.errors }" />
+                <div *ngIf="submitted && f.content.errors" class="invalid-feedback">
+                    <div *ngIf="f.content.errors.required">Content is required</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col">
+            <label>Subject</label>
+            <select formControlName="subject" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.subject.errors }">
+                <option value="Reply">Reply</option>
+                <option value="Please Reply">Please Reply Soon</option>
+
+            </select>
+              <div *ngIf="submitted && f.subject.errors" class="invalid-feedback">
+                <div *ngIf="f.subject.errors.required">Subject is required</div>
+              </div>
+            </div>
+        </div>
+
+          <div class="form-group form-check">
+              <input type="checkbox" formControlName="userCreated" id="userCreated" class="form-check-input" [ngClass]="{ 'is-invalid': submitted && f.userCreated.errors }" />
+              <label for="userCreated" class="form-check-label">Accept User Created</label>
+              <div *ngIf="submitted && f.userCreated.errors" class="invalid-feedback">Accept Required</div>
+          </div>
+
+        <div class="text-center">
+              <button class="btn btn-primary mr-1">Submit</button>
+              <button class="btn btn-secondary" type="reset" (click)="onReset()">Clear Form</button>
+        </div>
+
+    </form>
+  </div>
+</div>
+

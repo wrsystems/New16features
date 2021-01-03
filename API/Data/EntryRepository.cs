@@ -82,5 +82,73 @@ namespace API.Data
         {
             return await _context.Users.FindAsync(id);
         }
+
+
+    // 12-24 copied from old flak repo
+    // 12-20 main task
+    // 11/4 note parans are now changed - -  *********************************************
+        public async Task<PagedList<EntryDto>> GetEntrysForUser(EntryParams entryParams)
+        {
+            var query = _context.Entrys
+                
+                .Where(m=>m.UserName == entryParams.Username )  // 11-10 I added this !!!! Worked
+                .OrderByDescending(m => m.DateCreated)
+                .AsQueryable();
+
+            // changed 12-19 
+            // query = query.Where(u => u.Recipient.UserName == flakParams.Username 
+            //         && u.RecipientDeleted == false);
+
+            var entrys = query.ProjectTo<EntryDto>(_mapper.ConfigurationProvider);
+
+            return await PagedList<EntryDto>.CreateAsync(entrys, entryParams.PageNumber, entryParams.PageSize);
+
+            // 12-19 out, change above to not use cntainer value
+            // query = flakParams.Container switch
+            // {
+            //     "Inbox" => query.Where(u => u.Recipient.UserName == flakParams.Username 
+            //         && u.RecipientDeleted == false),
+            //     "Outbox" => query.Where(u => u.Sender.UserName == flakParams.Username
+            //         && u.SenderDeleted == false),
+            //     _ => query.Where(u => u.Recipient.UserName ==
+            //         flakParams.Username && u.RecipientDeleted == false && u.DateRead == null)
+            // };
+
+        }
+
+        public async Task<IEnumerable<EntryDto>> GetEntryUsername(string currentUsername)
+        {
+
+            var entrys = await _context.Entrys
+                // .Include(u => u.Sender).ThenInclude(p => p.Photos)
+                // .Include(u => u.Recipient).ThenInclude(p => p.Photos)
+                .Where(t => t.UserName == currentUsername  && t.UserDeleted == false
+                
+                        // && m.Sender.UserName == recipientUsername
+                        // || m.Recipient.UserName == recipientUsername
+                        // && m.Sender.UserName == currentUsername && m.SenderDeleted == false
+                )
+                .OrderBy(m => m.DateCreated)
+                .ToListAsync();
+
+                Console.WriteLine(" ********************** ");
+                Console.WriteLine(" Flak Point BBBBBBBBBBB ");
+                Console.WriteLine(" ********************** ");
+
+            // var unreadMessages = messages.Where(m => m.DateRead == null 
+            //     && m.Recipient.UserName == currentUsername).ToList();
+
+            // if (unreadMessages.Any())
+            // {
+            //     foreach (var message in unreadMessages)
+            //     {
+            //         message.DateRead = DateTime.Now;
+            //     }
+
+            //     await _context.SaveChangesAsync();
+            // }
+
+            return _mapper.Map<IEnumerable<EntryDto>>(entrys);
+        }
     }
 }

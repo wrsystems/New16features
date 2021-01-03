@@ -16,6 +16,10 @@ namespace API.Data
         public DbSet<UserLike> Likes { get; set; }
         public DbSet<Message> Messages { get; set; }
 
+    // Fhotos added 12-26
+        public DbSet<Fhoto> Fhotos { get; set; }
+        public DbSet<Flak> Flaks { get; set; }
+
     // Gplaces added 12-7
         public DbSet<Gplace> Gplaces { get; set; }
 
@@ -23,8 +27,6 @@ namespace API.Data
         public DbSet<Entry> Entrys { get; set; }
         public DbSet<Organization> Organizations { get; set; }
 
-    // Flak added 11-03
-        public DbSet<Flak> Flaks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -59,15 +61,15 @@ namespace API.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Flak 11-03
-                builder.Entity<Flak>()
-                .HasOne(u => u.Recipient)
-                .WithMany(m => m.FlaksReceived)
-                .OnDelete(DeleteBehavior.Restrict);
+            //     builder.Entity<Flak>()
+            //     .HasOne(u => u.Recipient)
+            //     .WithMany(m => m.FlaksReceived)
+            //     .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<Flak>()
-                .HasOne(u => u.Sender)
-                .WithMany(m => m.FlaksSent)
-                .OnDelete(DeleteBehavior.Restrict);
+            // builder.Entity<Flak>()
+            //     .HasOne(u => u.Sender)
+            //     .WithMany(m => m.FlaksSent)
+            //     .OnDelete(DeleteBehavior.Restrict);
 
             // Message
             builder.Entity<Message>()

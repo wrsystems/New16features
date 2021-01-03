@@ -27,18 +27,23 @@
                   <a class="nav-link" routerLink='/entry'routerLinkActive='active' >Create Entry</a>
                 </li>
 
-              <!-- Added 11-11 -->
-                <li class="nav-item">
-                <a class="nav-link" routerLink='/flakcards'routerLinkActive='active' >Reply Flak</a>
+              <!-- Added 12-29 -->
+                <!-- <li class="nav-item">
+                <a class="nav-link" routerLink='/flak'routerLinkActive='active' >Flak Message</a>
+              </li> -->
+
+              <!-- Added 12-24 -->
+              <li class="nav-item">
+                <a class="nav-link" routerLink='/replycards'routerLinkActive='active' >Reply Entry</a>
               </li>
 
                 <li *appHasRole='["Admin", "Moderator"]' class="nav-item">
                     <a class="nav-link" routerLink='/admin'routerLinkActive='active' >Admin</a>
                 </li>
             </ng-container>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" routerLink='/errors'routerLinkActive='active' >Errors</a>
-            </li>
+            </li> -->
         </ul>
 
     <!-- If logged in determined by currentUser$ set in AccountService -->

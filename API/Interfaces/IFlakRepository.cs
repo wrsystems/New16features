@@ -8,11 +8,13 @@ namespace API.Interfaces
 {
     public interface IFlakRepository
     {
-        void AddFlak(Flak flak);
-        void DeleteFlak(Flak flak);
-        Task<Flak> GetFlak(int id);
-        Task<PagedList<FlakDto>> GetFlaksForUser(FlakParams flakParams);
-        Task<IEnumerable<FlakDto>> GetFlakThread(string currentUsername, string recipientUsername);
+        void AddFlak(Flak Flak);
+        void DeleteFlak(Flak Flak);
+        Task<Flak> GetFlakById(int id);
+        Task<IEnumerable<FlakDto>> GetFlakBySubject(string currentUsername);
         Task<bool> SaveAllAsync();
+        
+        // Task<AppUser> GetUserByUsernameAsyncFlak(string username);
+        Task<IEnumerable<FlakDto>> GetFlakUsername(string currentUsername);
     }
 }

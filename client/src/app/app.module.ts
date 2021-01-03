@@ -33,34 +33,35 @@ import { HasRoleDirective } from './_directives/has-role.directive';
 import { UserManagementComponent } from './admin/user-management/user-management.component';
 import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
 import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
-import { FlakFlaksComponent } from './flak/flak-flaks/flak-flaks.component';
-import { LoginComponent } from './login/login.component';
 
-// added 11-10
-import { FlakHomeComponent } from './flak/flak-home/flak-home.component';
-import { FlakDetailComponent } from './flak/flak-detail/flak-detail.component';
-import { FlakCardComponent } from './flak/flak-card/flak-card.component';
+import { LoginComponent } from './login/login.component';
 import { NavMineComponent } from './nav-mine/nav-mine.component';
-import { EntrysListComponent } from './entrys/entrys-list/entrys-list.component';
 import { OrgListComponent } from './org/org-list/org-list.component';
-import { EntrysFormComponent } from './entrys/entrys-form/entrys-form.component';
 import { OrgFormComponent } from './org/org-form/org-form.component';
-import { EntrysTryComponent } from './entrys/entrys-try/entrys-try.component';
-import { EntrysCopych6Component } from './entrys/entrys-copych6/entrys-copych6.component';
-import { EntryInputComponent } from './entrys/entry-input/entry-input.component';
-// import { ItemDetailComponent } from './item/item-detail/item-detail.component';
-// import { ItemOutputComponent } from './item/item-output/item-output.component';
+
 
 // tried on 12-16 no luck, reversed
-// import { AngularMaterialModule } from './app.material.module';
+import { AngularMaterialModule } from './app.material.module';
 // import { AppNeilModule } from './app.neil.module';
 
-import { AutocompleteComponent } from './entry/google-places/google-places.component';
-import { EntryGoogleComponent } from './entry/entry-google/entry-google.component';
-import { EntryListComponent } from './entry/entry-list/entry-list.component';
-import { EntryMessageComponent } from './entry/entry-message/entry-message.component';
-// add 12-17
+// 1-2-21 renamed & new ALL ENTRY
+import { EntryFhotoLoaderComponent } from './entry/entry-fhoto-loader/entry-fhoto-loader.component';
+import { EntryFhotoEditComponent } from './entry/entry-fhoto-edit/entry-fhoto-edit.component';
+import { EntryHomeComponent } from './entry/entry-home/entry-home.component';
+import { EntryContentComponent } from './entry/entry-content/entry-content.component';
 import { EntryJsontestComponent } from './entry/entry-jsontest/entry-jsontest.component';
+import { EntryGoogleComponent } from './entry/entry-google/entry-google.component';
+import { AutocompleteComponent } from './entry/google-places/google-places.component';   // is GooglePlaceComponent
+import { EntryDetailComponent } from './entry/entry-detail/entry-detail.component';
+
+// 1-2-21 renamed & new ALL REPLY
+import { ReplyDetailComponent } from './reply/reply-detail/reply-detail.component';
+import { FlaksDetailComponent } from './reply/flaks-detail/flaks-detail.component';
+import { FlakContentComponent } from './reply/flak-content/flak-content.component';
+import { ReplyHomeComponent } from './reply/reply-home/reply-home.component';
+import { ReplyCardComponent } from './reply/reply-card/reply-card.component';
+import { FlakFhotoLoaderComponent } from './reply/flak-fhoto-loader/flak-fhoto-loader.component';
+import { FlakFhotoEditComponent } from './reply/flak-fhoto-edit/flak-fhoto-edit.component';
 
 @NgModule({
   declarations: [
@@ -86,26 +87,38 @@ import { EntryJsontestComponent } from './entry/entry-jsontest/entry-jsontest.co
     UserManagementComponent,
     PhotoManagementComponent,
     RolesModalComponent,
-    FlakFlaksComponent,
+    // FlakFlaksComponent,
     LoginComponent,
-    FlakHomeComponent,
-    FlakDetailComponent,
-    FlakCardComponent,
-    NavMineComponent,
-    EntrysListComponent,
-    OrgListComponent,
-    EntrysFormComponent,
-    OrgFormComponent,
-    EntrysTryComponent,
-    EntrysCopych6Component,
-    EntryInputComponent,
-    // ItemDetailComponent,
-    // ItemOutputComponent
-    AutocompleteComponent,
-    EntryGoogleComponent,
-    EntryListComponent,
-    EntryMessageComponent,
+    // FlakHomeComponent,
+    // FlakDetailComponent,
+    // FlakCardComponent,
+
+    // added 12-24
+    ReplyHomeComponent,
+    ReplyCardComponent,
+
+// 1-2-21 renamed and new
+    EntryFhotoLoaderComponent,
+    EntryFhotoEditComponent,
+    EntryHomeComponent,
+    EntryContentComponent,
     EntryJsontestComponent,
+    EntryGoogleComponent,
+    EntryDetailComponent,
+    ReplyDetailComponent,
+    FlaksDetailComponent,
+    FlakContentComponent,
+    FlakFhotoLoaderComponent,
+    FlakFhotoEditComponent,
+    AutocompleteComponent,
+
+    NavMineComponent,
+    // EntrysListComponent,
+    OrgListComponent,
+    // EntrysFormComponent,
+    OrgFormComponent,
+
+
    ],
   imports: [
     BrowserModule,
@@ -116,7 +129,7 @@ import { EntryJsontestComponent } from './entry/entry-jsontest/entry-jsontest.co
     ReactiveFormsModule,
     SharedModule,
     NgxSpinnerModule,
-    // AngularMaterialModule,
+    AngularMaterialModule,
     // AppNeilModule
   ],
   providers: [

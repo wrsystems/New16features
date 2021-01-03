@@ -59,6 +59,9 @@ namespace API.Data
         }
 
         public async Task<AppUser> GetUserByUsernameAsync(string username)
+                // above: this method is joining the aspuser table with the photos table and returning
+                // appuser (type) which includes the photo[] array from photo table.
+                // really not sure how that join is accomplished.
         {
             return await _context.Users
                 .Include(p => p.Photos)

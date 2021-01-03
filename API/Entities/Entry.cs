@@ -25,7 +25,7 @@ namespace API.Entities
         public bool UseAddress { get; set; }
         public bool UsePhone { get; set; }
         public bool UseAll { get; set; }
-        public string FormSubmitted { get; set; }
+        public bool FormSubmitted { get; set; }
   
     }
 }
