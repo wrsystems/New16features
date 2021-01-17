@@ -1,7 +1,6 @@
 <!-- 11/10 need to change to flakdto -->
 
-
-<div class="card mb-4">
+<div *ngIf="!submitted" class="card mb-4">
     <div class="card-img-wrapper">
         <img src="{{'./assets/user.png'}}" alt="{{entry.orgName}}" class="card-img-top">
         <ul class="list-inline member-icons animate text-center">
@@ -13,12 +12,14 @@
                     <i class="fa fa-user"></i>
                 </button> </li>
 
+                <!-- (click)="onChoice()" -->
+            <!-- routerLink='/reply/{{entry.id}}' changed to use @output instread of link 01-15-21 -->
+                               <!-- [queryParams]='{tab: 0}' -->
             <!-- routerLink='/members/{{member.username}}'  from member-card.html -->
 
             <li class="list-inline-item">
                 <button
                     routerLink='/reply/{{entry.id}}'
-                    [queryParams]='{tab: 0}'
                     class="btn btn-primary">
                     <i class="fa fa-envelope"></i>
                 </button> </li>
@@ -32,4 +33,12 @@
         <p class="card-text text-muted text-center">{{entry.subject}}</p>
         <p class="card-text text-muted text-center">{{entry.orgName}}</p>
     </div>
+</div>
+
+<div *ngIf="submitted" >
+  <!-- <app-reply-fhoto-edit
+      [entry] = "entryOut"
+  >
+</app-reply-fhoto-edit> -->
+
 </div>

@@ -45,11 +45,11 @@ import { AngularMaterialModule } from './app.material.module';
 // import { AppNeilModule } from './app.neil.module';
 
 // 1-2-21 renamed & new ALL ENTRY
-import { EntryFhotoLoaderComponent } from './entry/entry-fhoto-loader/entry-fhoto-loader.component';
-import { EntryFhotoEditComponent } from './entry/entry-fhoto-edit/entry-fhoto-edit.component';
+// import { EntryFhotoLoaderComponent } from './entry/entry-fhoto-loader/entry-fhoto-loader.component';
+// import { EntryFhotoEditComponent } from './entry/entry-fhoto-edit/entry-fhoto-edit.component';
 import { EntryHomeComponent } from './entry/entry-home/entry-home.component';
 import { EntryContentComponent } from './entry/entry-content/entry-content.component';
-import { EntryJsontestComponent } from './entry/entry-jsontest/entry-jsontest.component';
+// import { EntryJsontestComponent } from './entry/entry-jsontest/entry-jsontest.component';
 import { EntryGoogleComponent } from './entry/entry-google/entry-google.component';
 import { AutocompleteComponent } from './entry/google-places/google-places.component';   // is GooglePlaceComponent
 import { EntryDetailComponent } from './entry/entry-detail/entry-detail.component';
@@ -62,6 +62,13 @@ import { ReplyHomeComponent } from './reply/reply-home/reply-home.component';
 import { ReplyCardComponent } from './reply/reply-card/reply-card.component';
 import { FlakFhotoLoaderComponent } from './reply/flak-fhoto-loader/flak-fhoto-loader.component';
 import { FlakFhotoEditComponent } from './reply/flak-fhoto-edit/flak-fhoto-edit.component';
+// 01-02-21 for testing
+// import { EntryFhotoLoader21Component } from './entry/entry-fhoto-loader21/entry-fhoto-loader21.component';
+
+import { EntryFhotoEdit21Component } from './entry/entry-fhoto-edit21/entry-fhoto-edit21.component';
+import { EntryFhotoComponent } from './entry/entry-fhoto/entry-fhoto.component';
+import { ReplyFhotoEditComponent } from './reply/reply-fhoto-edit/reply-fhoto-edit.component';
+
 
 @NgModule({
   declarations: [
@@ -98,11 +105,11 @@ import { FlakFhotoEditComponent } from './reply/flak-fhoto-edit/flak-fhoto-edit.
     ReplyCardComponent,
 
 // 1-2-21 renamed and new
-    EntryFhotoLoaderComponent,
-    EntryFhotoEditComponent,
+    // EntryFhotoLoaderComponent,
+    // EntryFhotoEditComponent,
     EntryHomeComponent,
     EntryContentComponent,
-    EntryJsontestComponent,
+    // EntryJsontestComponent,
     EntryGoogleComponent,
     EntryDetailComponent,
     ReplyDetailComponent,
@@ -111,7 +118,11 @@ import { FlakFhotoEditComponent } from './reply/flak-fhoto-edit/flak-fhoto-edit.
     FlakFhotoLoaderComponent,
     FlakFhotoEditComponent,
     AutocompleteComponent,
+    ReplyFhotoEditComponent,
 
+    // EntryFhotoLoader21Component,
+    EntryFhotoEdit21Component,
+    EntryFhotoComponent,
     NavMineComponent,
     // EntrysListComponent,
     OrgListComponent,

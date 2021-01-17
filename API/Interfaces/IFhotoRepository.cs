@@ -10,13 +10,14 @@ namespace API.Interfaces
     {
         void AddFhoto(Fhoto Fhoto);
         void DeleteFhoto(Fhoto Fhoto);
+        void UpdateFhoto(Fhoto Fhoto);
+
         Task<Fhoto> GetFhotoById(int id);
-        Task<Fhoto> GetEntryFhotoById(int id);
+        
+        // below one has been problem to me
+        Task<IEnumerable<FhotoGetIdDto>> GetEntryFhotoById(int id);
         Task<IEnumerable<FhotoDto>> GetFhotoByUsername(string currentUsername);
         Task<bool> SaveAllAsync();
-        
-        // Task<IEnumerable<FhotoDto>> GetFhotoUsername(string currentUsername);
 
-        // Task<AppUser> GetUserByUsernameAsyncFhoto(string username);
     }
 }

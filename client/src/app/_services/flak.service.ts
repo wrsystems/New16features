@@ -12,12 +12,18 @@ export class FlakService {
 
   constructor(private http: HttpClient) { }
 
+  // 01-14-21 Heavily Used to pull in replies (0 to many) for user submitted entry
+  getFlaksForEntry(entryid: number) {
+    return this.http.get<Flak[]>(this.baseUrl + 'flak/entry/' + entryid);
+  }
+
+
   // 12-28
   getFlakUserName(username: string) {
     return this.http.get<Flak[]>(this.baseUrl + 'flak/username/' + username);
   }
 
-  // 12-28
+  // 12-28 used in flak-detail & resolver
   getFlakId(id: number) {
     return this.http.get<Flak>(this.baseUrl + 'flak/id/' + id);
   }

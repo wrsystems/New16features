@@ -54,20 +54,20 @@ namespace API.Data
             // return _mapper.Map<IEnumerable<FlakDto>>(flaks);
 
         }
-
-    // fourth method
-        public async Task<IEnumerable<FlakDto>> GetFlakBySubject(string subject)
+        
+    // =======================================================================
+    // *****  Get flak(s) records that match entry id (may not be any)
+    // =======================================================================
+        public async Task<IEnumerable<FlakDto>> GetFlaksForEntryRepo(string username, int entryid)
         {
 
-        // Note: think context.Flaks means specific db table
-            var Flaks = await _context.Flaks
-                .Where(f => f.Subject == subject
-                        //  .Where(e => e.UserName == username && e.Subject == subject
-                )
+            var flaks = await _context.Flaks
+                .Where(f => f.UserName == username && f.EntryId == entryid )
                 .ToListAsync();
 
-            return _mapper.Map<IEnumerable<FlakDto>>(Flaks);
+            return _mapper.Map<IEnumerable<FlakDto>>(flaks);
         }
+
 
     // fifth method
         public async Task<bool> SaveAllAsync()
@@ -109,5 +109,9 @@ namespace API.Data
 
             return _mapper.Map<IEnumerable<FlakDto>>(flaks);
         }
+
+
+
+
     }
 }

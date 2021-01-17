@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 
-// 12-23 copied from member-detail and modified
 import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from '@kolkov/ngx-gallery';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
@@ -11,6 +10,11 @@ import { Entry } from '../../_models/Entry';
 // 12-28
 import { Flak } from '../../_models/Flak';
 import { FlakService } from '../../_services/flak.service';
+// 01-14-21
+import { Fhoto } from '../../_models/fhoto';
+import { FhotoService } from '../../_services/fhoto.service';
+import { Place } from '../../_models/place';
+import { PlaceService } from '../../_services/place.service';
 
 @Component({
   selector: 'app-reply-detail',
@@ -19,21 +23,25 @@ import { FlakService } from '../../_services/flak.service';
 })
 
 export class ReplyDetailComponent implements OnInit {
+
   @ViewChild('entryTabs', {static: true}) entryTabs: TabsetComponent;
+  // @ViewChild('memberTabs', { static: false }) memberTabs: TabsetComponent;  from SO
+
+  @Input() entry: Entry
+  @Input() fhotos: Fhoto[] = [];
 
   flakOne: Flak = {'id': 0, 'subject': '', 'content': '', 'hasBeenRead': false, 'entryId': 0,
       'userCreated': false, 'userDeleted': false, 'orgCreated': false, 'orgDeleted': false,
       'fhotoAdded': false, 'dateCreated': '2001-02-02', 'dateFirstRead': '2001-01-01',
       'orgId': 1, 'orgName': 'No Org Name Yet, set to id one', 'userId': 1, 'userName': '' };
 
-  entry: Entry;
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
   idOrig: any;
   activeTab: TabDirective;
 
   flaks: Flak[] = [];  // 12-28
-  hardUsername = 'ruthie';
+  // hardUsername = 'ruthie';
   loading = false;
   passedFlak: Flak;  // single object
   validationErrors: string[] = [];
@@ -42,27 +50,29 @@ export class ReplyDetailComponent implements OnInit {
   localValue = '';  // these three variable are to get username from local storage
   userObj: User;
   myUserName: any;
+  extraTry = 0;
+  place: Place;
 
-  constructor(private flakService: FlakService, private route: ActivatedRoute) { }
+  constructor(private flakService: FlakService, private route: ActivatedRoute,
+                      private placeService: PlaceService, private fhotoService: FhotoService) { }
 
   ngOnInit(): void {
+
+    // this.route.queryParams.subscribe(params => {
+    //   params.tab ? this.selectTab(params.tab) : this.selectTab(0);
+    // });
+
+    // Interesting idea - - route to specific tab -- copied from SO
+    // [routerLink]="['/members']"[queryParams]="{ tab: 3 }"
+
 
     this.sendToFlakMessage = false;
     this.passedFlak = this.flakOne;  // 12-28 for flaks-message
 
-    this.route.data.subscribe(data => {  // uses resolver reply-list.resolver  12-24
-      this.entry = data.entry;
-      // console.log('In reply-list at init, after route : ', data)    // brings entry object
-    });
-
-    // JUST TOOK THESE LINES OUT BECAUSE GOTUNDEFINED ERROR MESSAGES  12-30-2020
-    // this.route.queryParams.subscribe(params => {
-    //   console.log( ' this.entryTabs.tabs :', this.entryTabs);
-
-    //   // params.tab ? this.selectTab(params.tab) : this.selectTab(0);  // change to always select zero
-    //   params.tab ? this.selectTab(0) : this.selectTab(0);
+    // this.route.data.subscribe(data => {  // uses resolver reply-list.resolver  12-24
+    //   this.entry = data.entry;
+    //   console.log('REPLY-DETAIL at init, after route : ', this.entry)    // brings entry object
     // });
-
 
     this.galleryOptions = [
         {
@@ -76,10 +86,27 @@ export class ReplyDetailComponent implements OnInit {
       ];
 
       this.loadFlaks();
+      this.loadPlace();
+      this.loadFhotos();
 
     // this.galleryImages = this.getImages();  // 12-23 added after add photo to database
     // this is the end of OnInit
   };
+
+// ================================= End Of ngOnInit =========================================
+
+  ngAfterViewInit() {
+  this.route.queryParams.subscribe(params => {
+    const selectTab = 0;
+    // const selectTab = +params['tab'];
+    // tslint:disable-next-line: no-string-literal
+    console.log('REPLY-DETAIL - queryparams:' + selectTab);
+    params.tab ? this.selectTab(params.tab) : this.selectTab(0);
+    // this.memberTabs.tabs[selectTab > 0 ? selectTab : 0].active = true;
+  });
+  }
+
+
 
   sendToFlakIndicator() {
     this.sendToFlakMessage = true;
@@ -87,62 +114,59 @@ export class ReplyDetailComponent implements OnInit {
 
   loadFlaks() {
     this.loading = true;
-    this.flakService.getFlakUserName(this.hardUsername).subscribe(result => {
+    this.flakService.getFlaksForEntry(this.entry.id).subscribe(result => {
     // this.noMatch = '';
       this.flaks = result;
-      console.log('List ruthie flaks :', this.flaks );
+      // console.log('REPLY-DETAIL - List ruthie flaks :', this.flaks );
+      // console.log('REPLY-DETAIL flaks.length : ', this.flaks.length);  // 01-14-21
       this.loading = false;
     });
-  }
+    };
 
-  // getImages(): NgxGalleryImage[] {  // 12-23 added after add photo to database
-  //   const imageUrls = [];
-  //   for (const photo of this.member.photos) {
-  //     imageUrls.push({
-  //       small: photo?.url,
-  //       medium: photo?.url,
-  //       big: photo?.url
-  //     });
-  //   }
-  //   return imageUrls;
-  // }
-
-  // loadMessages() {  // 12-23 added after add chat to database
-  //   this.messageService.getMessageThread(this.member.username).subscribe(messages => {
-  //     this.messages = messages;
-  //   });
-  // }
+  loadPlace() {
+    this.placeService.getPlaceById(this.entry.id).subscribe(result => {
+    // this.noMatch = '';
+      this.place = result;
+      // console.log('REPLY-DETAIL - List the place :', this.place );
+    });
+    };
 
   selectTab(tabId: number) {
-    this.entryTabs.tabs[tabId].active = true;
+    // this.entryTabs.tabs[tabId].active = true;   // can not get fixed, says "tabs" undefined but works in entry-detail
   }
 
   onTabActivated(data: TabDirective) {
     this.activeTab = data;
-    // if (this.activeTab.heading === 'Messages' && this.entry.length === 0) {
-    //   this.loadMessages();
-    // }
+    if (this.activeTab.heading === 'Photos' && this.extraTry == 0) {
+      this.extraTry = 1;
+      this.loadFhotos();
+    }
   }
+
+  getImages(): NgxGalleryImage[] {  // going to return an array
+    const imageUrls = [];    // initially empty array
+    for (const photo of this.fhotos) {  // loop over imageUrls array created line above
+      imageUrls.push({
+        small: photo?.url,
+        medium: photo?.url,
+        big: photo?.url
+      });
+    }
+    return imageUrls;  // after loop return imagesUrls
+  }
+
+  loadFhotos() {
+    this.galleryImages = this.getImages();
+    console.log('REPLY-DETAIL - AFTER GALLERY IMAGES LOAD',this.galleryImages);
+  }
+
+  loadFhoto() {
+    this.fhotoService.getFhotoEntryId(this.entry.id).subscribe(result => {
+      this.fhotos = result;
+      console.log('REPLY-DETAIL - I AM NOT FHOTO-EDIT load entry FHOTOS !! OBJECT : ', this.fhotos);
+    });
+  }
+
 
 }
 
-  // save coding not used until things all work 12-23
-  // loadMember() {  // this worked, not neet version below 12-13
-
-    // this.idOrig = +this.route.snapshot.paramMap.get('id')
-    // console.log('idOrig : ', this.idOrig);
-
-  //   this.entryService.getEntryId(+this.route.snapshot.paramMap.get('id')).subscribe(member => {
-  //     this.flak = member;
-  //     // console.log('At loadMember : ',this.flak);
-  //     // this.galleryImages = this.getImages();
-  //   })
-  // }
-
-  // loadMember() {
-  //   this.entryService.getEntryId(16).subscribe(member => {
-  //     this.flak = member;
-  //     console.log('At loadMember : ',this.flak);
-  //     // this.galleryImages = this.getImages();
-  //   })
-  // }

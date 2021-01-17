@@ -19,7 +19,7 @@ namespace API.DTOs
         public bool UserDeleted { get; set; }
         public bool OrgDeleted { get; set; }
         public bool FhotoAdded { get; set; }
-        public int? EntryId { get; set; }
+        public int EntryId { get; set; }
 
     }
 }

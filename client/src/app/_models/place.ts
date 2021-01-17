@@ -1,6 +1,8 @@
 
 export class Place {
 
+  id: number;
+  entryId?: number;
   placeId: string;
   gname?: string;
   fullAddress?: string;
@@ -17,6 +19,9 @@ export class Place {
   placeUrl?: string;
   useOrg?: boolean;
   orgId?: number;
+  orgName?: string;
   formSubmitted?: boolean;
-
+  userId?: number;
+  userName?: string;
+  match?: string;
 }

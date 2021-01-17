@@ -37,7 +37,7 @@ export class FlaksDetailComponent implements OnInit {
 
     this.route.data.subscribe(data => {  // uses resolver reply-list.resolver  12-24
       this.flak = data.entry;
-      // console.log('In detail, init, after route : ',data)
+      // console.log('FLAKS-DETAIL - to print chosen flak (make sure values ok) : ', this.flak )
     });
 
     this.route.queryParams.subscribe(params => {
@@ -57,7 +57,7 @@ export class FlaksDetailComponent implements OnInit {
 
     // this.galleryImages = this.getImages();  // 12-23 added after add photo to database
 
-    // this is the end of OnInit
+   // ================================= End Of ngOnInit =========================================
   }
 
   // getImages(): NgxGalleryImage[] {  // 12-23 added after add photo to database

@@ -2,6 +2,11 @@
 import { Component, NgZone } from '@angular/core';
 import { Input, Output, EventEmitter } from '@angular/core';
 import { Place } from '../../_models/place';
+import { PlaceService } from '../../_services/place.service';
+import { User } from '../../_models/user';  // brought in to get username, probably better solution
+import { take } from 'rxjs/operators';
+import { AccountService } from 'src/app/_services/account.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-entry-google',
@@ -10,16 +15,26 @@ import { Place } from '../../_models/place';
 })
 export class EntryGoogleComponent {
 
-  placeOne: Place;  // from import
+  @Output() placeOut: Place;
 
-  @Input() place: Place; // decorate the property with @Input()
-  @Output() newPlaceEvent = new EventEmitter<Place>();
+  placeOne: Place = {'id': 0,'entryId': 0, 'placeId': '', 'gname': '', 'fullAddress': '', 'phone': '',
+  'fullDescription': '', 'streetNumber': '', 'street': '', 'city': '',
+  'postCode': '', 'state': '', 'country': '', 'countryShort': '', 'placeUrl': '',
+  'formSubmitted': false, 'useOrg': false, 'orgId': 1, 'orgName': '', 'userId': 0, 'userName': '',
+  'match': 'NEW'}
+
+  // @Input() place: Place; // decorate the property with @Input()
+  // @Output() newPlaceEvent = new EventEmitter<Place>();
 
   address: Object;
   establishmentAddress: Object;
 
   formattedAddress: string;
   formattedEstablishmentAddress: string;
+
+  place: Place;
+  user$: User;
+  validationErrors: string[] = [];
 
   phone: string;
   streetNumber: string;
@@ -33,40 +48,83 @@ export class EntryGoogleComponent {
   placeId: string;
   placeUrl: string;
   submitted = false;
-  placeDetail = false;
+  placeDetail = false;   // false means not to show details on the display screen, only true for testing
+  myArrray = [];
+  doneWithPlace = false;
 
-  constructor(public zone: NgZone) { }
+
+  constructor(public zone: NgZone, private placeService: PlaceService,
+      private accountService: AccountService, private router: Router) {
+      this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user$ = user);
+  }
 
   ngOnInit() {
+    this.place = this.placeOne;
+    // console.log('ENTER-GOOGLE or place:Place ngoninit :',this.place);
+    // console.log('ENTRY-GOOGLE entry length :', this.myArrray.length);
   }
+
 
   // send data back to parent -- entry-list
   addNewPlace() {
-    this.submitted = true;
 
+    this.submitted = true;
     this.place.placeId = this.placeId;
     this.place.gname = this.gname;
     this.place.fullAddress = this.formattedEstablishmentAddress;
-
     this.place.phone = this.phone;
     this.place.fullDescription = 'Problem it is object';
     this.place.streetNumber = this.streetNumber;
-
     this.place.street = this.street;
     this.place.city = this.city;
     this.place.postCode = this.postCode;
-
     this.place.state = this.state;
     this.place.country = this.country;
     this.place.countryShort = this.countryShort;
-
     this.place.placeUrl = this.placeUrl;
     this.place.useOrg = false;
     this.place.orgId = 1;
 
-      // console.log('From google ', this.place);
-    this.newPlaceEvent.emit(this.place);
+    // console.log('From google ', this.place);
+    // Here Old Emit <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    //     this.newPlaceEvent.emit(this.place);
+    //     <app-entry-google
+    //     [place]="passedPlace"                      passed in place  passedPlace name is copy of placeOne
+    //     (newPlaceEvent)="updatePlace($event)"      called updatePlace  emited this.place
+    //  > </app-entry-google>
+
+    // 01-09-21 new code to Post gplace
+    this.place.userId = 0;
+    this.place.userName = this.user$.username;
+    this.place.orgName = '';
+    this.place.match ='NEW';
+    this.place.entryId = 0;
+    this.place.formSubmitted = true;
+
+    this.updatePlace();
   }
+
+
+  updatePlace() {
+
+    Object.assign( this.placeOne, this.place);
+    this.postPlace();
+
+    // this.router.navigateByUrl('/content');
+  }
+
+
+  postPlace() {
+
+    this.placeService.addPlace(this.placeOne).subscribe(data => {
+        this.placeOne.id = data.id
+
+      console.log('ENTER-GOOGLE Gplace POST TO BE ENTERED FIRST !!!!', this.placeOne)
+      this.placeOut = this.placeOne;  // placeOut is in @Output
+      this.doneWithPlace = true;
+    });
+  }
+
 
   onSubmit() {
     this.submitted = true;
@@ -85,7 +143,7 @@ export class EntryGoogleComponent {
   onReset() {
     this.submitted = false;
     // this.registerForm.reset();
-}
+  }
 
   getAddress(place: object) {
     this.address = place['formatted_address'];

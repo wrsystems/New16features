@@ -9,48 +9,46 @@ using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using API.Data;
 
 namespace API.Controllers
 {
     [Authorize]
     public class EntrysController : BaseApiController
     {
+
+        private readonly DataContext _context;
         private readonly IUserRepository _userRepository;
         private readonly IEntryRepository _entryRepository;
         private readonly IMapper _mapper;
         public EntrysController(IUserRepository userRepository, IEntryRepository entryRepository, 
-            IMapper mapper)
+            IMapper mapper, DataContext context)
         {
             _mapper = mapper;
             _entryRepository = entryRepository;
             _userRepository = userRepository;
+            _context = context;
         }
 
-        // private static readonly int myuser8 = 8;  // assign variable a value 11/13
+    // ************************************************
+    // *******************  First endpoint POST
+    // *************************************************
+          // public async Task<ActionResult<EntryDto>> AddEntry(EntryPostDto entryPostDto)
+        // {
+        //     // look-up username from the token in ClaimsPrincipleExtensions & return user entity
+        //     var user = await _entryRepository.GetUserByUsernameAsyncEntry(User.GetUsername());
 
-    // *******************  First endpoint
+        //     var entry = new Entry
         [HttpPost]
-        public async Task<ActionResult<EntryDto>> AddEntry(EntryPostDto entryPostDto)
+        public async Task<ActionResult<Entry>> AddEntry(Entry entryPostDto)
         {
-            // var username = User.GetUsername();
-
-            // if (username == createEntryDto.RecipientUsername.ToLower())
-            //     return BadRequest("You cannot send EntryS !! to yourself dumbhead ");
-
-            // var sender = await _userRepository.GetUserByUsernameAsync(username);
-            // var recipient = await _userRepository.GetUserByUsernameAsync(createEntryDto.RecipientUsername);
-
-            // if (recipient == null) return NotFound();
-
-
-                Console.WriteLine(" ********************** ");
-                Console.WriteLine(" ** From Entrs Controller POST ** ");
-                // Console.WriteLine(" Entrys Repository AsyncEntry ", username);
-                Console.WriteLine(" ********************** ");
-
-            // look-up username from the token in ClaimsPrincipleExtensions
-            var user = await _entryRepository.GetUserByUsernameAsyncEntry(User.GetUsername());
-            var currentUsername = user.UserName;
+            // look-up username from the token in ClaimsPrincipleExtensions & return user entity
+            // var user =  _entryRepository.GetUserByUsernameAsyncEntry(User.GetUsername());
+            // var user =  _entryRepository.GetUserByUsernameAsyncEntry(User.GetUsername());
+            // await _entryRepository.SaveAllAsync();
 
             var entry = new Entry
             {
@@ -65,8 +63,9 @@ namespace API.Controllers
                 StarRating = entryPostDto.StarRating,
                 // UserId = entryPostDto.UserId,
                 // UserName = entryPostDto.UserName,
-                UserId = user.Id,
-                UserName = user.UserName,
+                UserId = entryPostDto.UserId,
+                UserName = entryPostDto.UserName,
+                // UserName = user.UserName,
 
                 UserDeleted = entryPostDto.UserDeleted,
                 UseEmail = entryPostDto.UseEmail,
@@ -76,18 +75,32 @@ namespace API.Controllers
 
             };
 
-            // _mapper.Map(entryPostDto, entry);  // not yet work: missing type map configuration
+                _context.Entrys.Add(entry);
+                await _context.SaveChangesAsync();
 
-            _entryRepository.AddEntry(entry);
+            // var entry2 = await _entryRepository.AddEntryReturnId(entry);
 
-            if (await _entryRepository.SaveAllAsync()) return Ok(_mapper.Map<EntryDto>(entry));
+                int id = entry.Id;
+                Console.WriteLine(" <<<<<<<<<<<<<<<<==============================");
+                Console.WriteLine("Entry Id: " + id.ToString() + " entry.id: " + id.ToString());
 
-            return BadRequest("Failed to save the POSTED Entry !! ");
+        //    if (await _entryRepository.SaveAllAsync()) return Ok(_mapper.Map<EntryDto>(entry2));
+        //         return BadRequest("Failed to send Entry !! ");
 
+            return Ok(id); 
+            // return Ok(_mapper.Map<EntryDto>(entry)); 
+
+            // if (await _entryRepository.SaveAllAsync()) return Ok(_mapper.Map<EntryDto>(entry2));
+
+            // return BadRequest("Failed to save the POSTED Entry !! ");
+            // note: only part in quotes returned to network response 
         }
 
-       // *******************  second endpoint (12-24 merged from old flak controller)
-       // 12-20 This is the main method for Entry to get cards *******************************************
+
+        // ******************************************************************************
+        // *******************  second endpoint (12-24 merged from old flak controller)
+        // 12-20 This is the main method for Entry to get cards *************************
+        // ******************************************************************************
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EntryDto>>> GetEntryForUser([FromQuery] 
             EntryParams entryParams)
@@ -125,34 +138,73 @@ namespace API.Controllers
             return Ok(await _entryRepository.GetEntryBySubject(currentUsername, subject));
         }
 
-        // *******************  Forth endpoint
+        // *******************  Fifth endpoint
         [HttpGet("id/{id}")]
         public async Task<ActionResult<IEnumerable<EntryDto>>> GetEntryById(int id)
         {
             return Ok(await _entryRepository.GetEntryById(id));
         }
 
-        // *******************  Fourth endpoint
-        // [HttpDelete("{id}")]
-        // public async Task<ActionResult> DeleteEntry(int id)
+        // *******************  Sixth endpoint  01-08-21 JUST TO GET TEST -- S/B Deleted
+        
+        [HttpGet("threeq/{username, orgname, placeid}")]
+        public async Task<ActionResult<IEnumerable<EntryDto>>> GetEntryJustWritten
+                    (string  username, string orgname, string placeid)
+        {
+            return Ok(await _entryRepository.GetEntryJustWritten(username, orgname, placeid));
+        }
+
+
+    // ************************************************
+    // *******************  First endpoint POST
+    // *************************************************
+        // [HttpPost]
+        // public async Task<ActionResult<EntryDto>> AddEntry(EntryPostDto entryPostDto)
         // {
-        //     var username = User.GetUsername();
+        //     // look-up username from the token in ClaimsPrincipleExtensions & return user entity
+        //     var user = await _entryRepository.GetUserByUsernameAsyncEntry(User.GetUsername());
 
-        //     var flak = await _entryRepository.GetEntry(id);
+        //     var entry = new Entry
+        //     {
+        //         Subject = entryPostDto.Subject,
+        //         Content = entryPostDto.Content,
+        //         OrgName = entryPostDto.OrgName,
+        //         OrgId = entryPostDto.OrgId,
+        //         UseAnony = entryPostDto.UseAnony,
+        //         SentToFlak = entryPostDto.SentToFlak,
+        //         PlaceId = entryPostDto.PlaceId,
+        //         FormSubmitted = entryPostDto.FormSubmitted,
+        //         StarRating = entryPostDto.StarRating,
+        //         // UserId = entryPostDto.UserId,
+        //         // UserName = entryPostDto.UserName,
+        //         UserId = user.Id,
+        //         UserName = user.UserName,
 
-        //     if (flak.Sender.UserName != username && flak.Recipient.UserName != username) 
-        //         return Unauthorized();
+        //         UserDeleted = entryPostDto.UserDeleted,
+        //         UseEmail = entryPostDto.UseEmail,
+        //         UseAddress = entryPostDto.UseAddress,
+        //         UsePhone = entryPostDto.UsePhone,
+        //         UseAll = entryPostDto.UseAll
 
-        //     if (flak.Sender.UserName == username) flak.SenderDeleted = true;
+        //     };
 
-        //     if (flak.Recipient.UserName == username) flak.RecipientDeleted = true;
+        //     var entry2 = await _entryRepository.AddEntryReturnId(entry);
 
-        //     if (flak.SenderDeleted && flak.RecipientDeleted) 
-        //         _flakRepository.DeleteFlak(flak);
+        //         int id = entry2.Id;
+        //         Console.WriteLine(" <<<<<<<<<<<<<<<<==============================");
+        //         Console.WriteLine("Entry2 Id: " + id.ToString() + " entry2.id: " + id.ToString());
 
-        //     if (await _flakRepository.SaveAllAsync()) return Ok();
+        // //    if (await _entryRepository.SaveAllAsync()) return Ok(_mapper.Map<EntryDto>(entry2));
+        // //         return BadRequest("Failed to send Entry !! ");
 
-        //     return BadRequest("Problem deleting the FLAK !! ");
+        //     return Ok(_mapper.Map<EntryDto>(entry2)); 
+
+        //     // if (await _entryRepository.SaveAllAsync()) return Ok(_mapper.Map<EntryDto>(entry2));
+
+        //     // return BadRequest("Failed to save the POSTED Entry !! ");
+        //     // note: only part in quotes returned to network response 
         // }
+
+
     }
 }

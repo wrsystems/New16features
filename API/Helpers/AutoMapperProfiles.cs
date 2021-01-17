@@ -33,11 +33,18 @@ namespace API.Helpers
             // 12/7 need to post Gplaces added guess order is <source, destination> 
             CreateMap<Gplace, GplaceDto>();
 
+            // 01-07-21 need to post Gplaces added guess order is <source, destination> 
+            CreateMap<Gplace, GplaceGetIdDto>();
+
             // 12/26 new
             CreateMap<Flak, FlakDto>();    // updated 12-26
+            // 01-14-21
+            CreateMap<FlakDto, Flak>(); 
+            CreateMap<GplaceDto, Gplace>();  
 
             // 12/26 new
             CreateMap<Fhoto, FhotoDto>();
+            CreateMap<Fhoto, FhotoGetIdDto>();
 
 
         }

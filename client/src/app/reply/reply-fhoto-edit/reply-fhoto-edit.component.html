@@ -1,0 +1,17 @@
+
+<div class="row" *ngIf="!user">
+  <div>
+<p> clear screen hopfully never see this message #0917</p>
+  </div>
+</div>
+
+
+<div class="row" *ngIf="user">
+    <div>
+                <app-reply-detail
+                  [fhotos]="fhotos"
+                  [entry]="entryOut"
+                >  </app-reply-detail>
+    </div>
+</div>
+

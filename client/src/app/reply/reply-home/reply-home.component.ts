@@ -19,7 +19,7 @@ export class ReplyHomeComponent implements OnInit {
   pageSize = 5;
   loading = false;
   hardUsername = 'ruthie';  // for testing
-  organizations: Entry[];  // for testing
+  // organizations: Entry[];  // for testing
 
   constructor(private entryService: EntryService) { }
 
@@ -45,14 +45,14 @@ export class ReplyHomeComponent implements OnInit {
     });
   }
 
-  listFlak() {
-    this.entryService.getEntrysUsername(this.hardUsername).subscribe(result => {
-        // this.noMatch = '';
-        this.organizations = result;
-        console.log('I am here to list ruthie :', this.organizations );
+  // listFlak() {
+  //   this.entryService.getEntrysUsername(this.hardUsername).subscribe(result => {
+  //       // this.noMatch = '';
+  //       this.organizations = result;
+  //       console.log('I am here to list ruthie :', this.organizations );
 
-    });
-  }
+  //   });
+  // }
 
   // deleteFlak(id: number) {
   //   this.flakService.deleteFlak(id).subscribe(() => {

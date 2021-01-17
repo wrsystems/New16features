@@ -15,6 +15,10 @@ import { User } from '../../_models/user';  // brought in to get username, proba
 
 export class FlakContentComponent implements OnInit {
 
+  @Input() entry: Entry;
+  @Output() entryOut: Entry;
+  @Output() flakOut: Flak;
+
   flakOne: Flak = {'id': 0, 'subject': '', 'content': '', 'hasBeenRead': false, 'entryId': 0,
       'userCreated': false, 'userDeleted': false, 'orgCreated': false, 'orgDeleted': false,
       'fhotoAdded': false, 'dateCreated': '2001-02-02', 'dateFirstRead': '2001-01-01',
@@ -33,42 +37,28 @@ export class FlakContentComponent implements OnInit {
 
   @Input() PassedEntry: Entry; // decorate the property with @Input()
 
-  // @Input() flak: Flak; // decorate the property with @Input()
-  // @Output() newFlakEvent = new EventEmitter<Flak>();
 
   validationErrors: string[] = [];
 
   constructor(private flakService: FlakService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+
+    this.entryOut = this.entry;
     this.flakForm = this.formBuilder.group({
 
         subject: ['', Validators.required],
         content: ['', Validators.required],
         userCreated: [false, Validators.requiredTrue]
       });
-    console.log('Print passed Entry value for Id : ', this.PassedEntry.id);
+      // console.log('FLAK-CONTENT - Print only the passed Entry value for Id : ', this.PassedEntry.id);
   }
-
-    // ***************************************************
-    // method to send data back to parent - - entry-list
-    // addNewFlak() {
-    //   this.submitted = true;
-    //   var ents =  JSON.stringify(this.flakForm.value);
-    //   // console.log('entry-message ents   ', ents);
-
-    //   this.strFlakIntoObj = JSON.parse(ents);
-    //   // console.log('Its working !! ', this.strEntryIntoObj);
-
-    //   this.newFlakEvent.emit(this.strFlakIntoObj);
-    // }
 
     // convenience getter for easy access to form fields
     get f() { return this.flakForm.controls; }
 
   onSubmit() {
         this.submitted = true;
-        console.log('got to onsubmit');
 
         // stop here if form is invalid
         if (this.flakForm.invalid) {
@@ -96,15 +86,10 @@ export class FlakContentComponent implements OnInit {
   // method called from reply-list html involking flaks-message
 
   updateFlak() {
-    // console.log('reply-list final result', flak );
-    // this.flakOne.orgName = this.placeOne.gname;
-    // this.flakOne.userName = this.myUserName;       // 12-28 MAYBE NEED BELOW
-    // this.entryOne.subject = entry.subject;
-    // console.log('entry-list subject', this.entryOne.subject );
 
     this.submitted = true;
     var ents =  JSON.stringify(this.flakForm.value);
-      // console.log('entry-message ents   ', ents);
+      // console.log('FLAK-CONTENT - flakform after stringify - ents   ', ents);
     this.flak = JSON.parse(ents);
     this.flak.entryId = this.PassedEntry.id;
     this.flak.userId = this.PassedEntry.userId;
@@ -112,8 +97,9 @@ export class FlakContentComponent implements OnInit {
     this.flak.orgId = this.PassedEntry.orgId;
     this.flak.orgName = this.PassedEntry.orgName;
     Object.assign( this.flakOne, this.flak);
-    console.log('flak-messages flakOne : ', this.flakOne );
+      // console.log('FLAK-CONTENT - flak-messages flakOne : ', this.flakOne );
 
+    this.flakOut = this.flakOne;
     this.postFlak();
 
     // alert("Flak Saved");
@@ -124,7 +110,7 @@ export class FlakContentComponent implements OnInit {
     // console.log(' forms object in postFlak ', this.flakOne);
 
     this.flakService.postFlak(this.flakOne).subscribe(response => {
-        console.log('Got to line after postFlak');
+        // console.log('FLAK-CONTENT - Got to line after postFlak');
         // this.router.navigateByUrl('/members');
       }, error => {
         this.validationErrors = error;

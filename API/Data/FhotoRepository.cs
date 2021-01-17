@@ -28,20 +28,71 @@ namespace API.Data
             _context.Fhotos.Add(photo);
         }
 
-    // // second method
+    // second method
         public void DeleteFhoto(Fhoto photo)
         {
             _context.Fhotos.Remove(photo);
         }
 
-
-    // method return entry fhotos 
-        public async Task<Fhoto> GetEntryFhotoById(int id)
+    // third method
+        public void UpdateFhoto(Fhoto fhoto)
         {
-            return await _context.Fhotos
-                .FirstOrDefaultAsync(e => e.EntryId == id);
+            _context.Entry(fhoto).State = EntityState.Modified;
         }
 
+
+    //  ************************************
+    //  method return fhotos using entryId    -- PROBLEM !!!!!
+    //  ************************************
+        public async Task<IEnumerable<FhotoGetIdDto>> GetEntryFhotoById(int id)
+        {
+            var photos = await _context.Fhotos
+                .Where(f => f.EntryId == id)
+                .ToListAsync();
+
+                Console.WriteLine(" ********************** ");
+                Console.WriteLine(" Fhoto Repo BBBBBBBBBB ");
+                Console.WriteLine(" ********************** ");
+
+            return _mapper.Map<IEnumerable<FhotoGetIdDto>>(photos);
+
+            // return _mapper.Map<IEnumerable<FlakDto>>(flaks);
+
+            // return await _context.Fhotos
+            //         .Where(e => e.EntryId == id)
+            //         .ToListAsync();
+
+            // from flaks repo 01-04  ----------------------------
+            // var flaks = await _context.Flaks
+            //     .Where(t => t.UserName == currentUsername)
+            //     .OrderBy(m => m.DateCreated)
+            //     .ToListAsync();
+            // return _mapper.Map<IEnumerable<FlakDto>>(flaks);
+
+                    // if (!result.Any())
+                    //   return NotFound();
+
+                    // return Ok(result);
+
+            //     .Include(e => e.Id == id)
+
+            //   .FirstOrDefaultAsync(e => e.Id == id);
+            //     .Where(e => e.EntryId == id);
+              
+                // .OrderBy(m => m.MessageSent)
+                // .ToListAsync();
+
+                    // from web -- lines below
+                    //  var result= await db.Vocabs.Where(a => a.LessonId == lessonId).ToListAsync();
+                    //         if (!result.Any())
+                    //             return NotFound();
+
+                    //         return Ok(result);
+
+        }
+
+
+  
     // third method
         public async Task<Fhoto> GetFhotoById(int id)
         {

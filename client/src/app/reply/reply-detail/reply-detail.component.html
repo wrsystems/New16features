@@ -3,7 +3,7 @@
 
 <!-- Section for the card on the left side -->
 <div *ngIf="!sendToFlakMessage" class="row">
-  <div class="col-4">
+  <!-- <div class="col-4">
       <div class="card">
           <img src="{{'./assets/user.png'}}" alt="{{entry.orgName}}"
               class="card-img-top img-thumbnail">
@@ -29,22 +29,41 @@
               </div>
           </div>
       </div>
-  </div>
+  </div> -->
 
   <!-- Section for the entry tabs -->
-  <div class="col-8">
+  <!-- <div class="col-8"> -->
+  <div>
       <tabset class="entry-tabset" #entryTabs>
 
           <!-- Section for entry content -->
-          <tab heading='About {{entry.subject}}' (selectTab)="onTabActivated($event)">
-              <h4>Description </h4>
-              <p>{{entry.content}}</p>
+          <tab heading='Message' (selectTab)="onTabActivated($event)">
+            <h4>Subject</h4>
+            <p>{{entry.subject}}</p>
+            <h4>Content</h4>
+            <p>{{entry.content}}</p>
           </tab>
 
           <!-- Section for Fhotos -->
-          <tab heading='Entry photos' (selectTab)="onTabActivated($event)" >
-              <p> will be fhotos </p>
+          <tab heading='Photos' (selectTab)="onTabActivated($event)">
+
+            <p> fhotos.length value is : {{fhotos.length}}</p>
+
+            <div *ngIf="fhotos.length > 0" >
+              <button
+                (click)="loadFhotos()"
+                class="btn btn-sm"
+                >Click To Show All Fhotos
+              </button>
+              <ngx-gallery [options]="galleryOptions" [images]="galleryImages"
+              style="display: inline-block; margin-bottom: 20px;"></ngx-gallery>
+            </div>
+
+            <div *ngIf="fhotos.length < 1" >
+                <h5> No Photos Were loaded </h5>
+            </div>
           </tab>
+
 
           <!-- flaks tab logic copied from member-message has line which lins to flaks-list (or detail) -->
           <!-- Section for Flaks -->
@@ -112,7 +131,12 @@
 
               <!-- Section For Business Contacts -->
           <tab heading='Business Contacts' (selectTab)="onTabActivated($event)" >
-                <p> will be gplaces </p>
+                <h4>Business Name</h4>
+                <p>{{place?.gname}}</p>
+                <h4>Address</h4>
+                <p>{{place?.fullAddress}}</p>
+                <h4>Phone Number</h4>
+                <p>{{place?.phone}}</p>
               <!-- <app-member-messages [messages]="messages" [username]="member.username"></app-member-messages> -->
           </tab>
       </tabset>

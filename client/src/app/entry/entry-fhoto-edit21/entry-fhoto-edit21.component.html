@@ -1,0 +1,29 @@
+<div class="row" *ngIf="user">
+
+    <div class="col-8">
+        <!-- <div class="alert alert-info" *ngIf="editForm.dirty">
+            <strong>Information: </strong> You have made changes.  Any unsaved changes will be lost
+        </div> -->
+
+            <!-- <div class="card-footer">
+                <button [disabled]="!editForm.dirty" form="editForm" type="submit" class="btn btn-success btn-block">Save Changes</button>
+            </div> -->
+        </div>
+
+    <div>
+        <!-- <tabset class="fhoto-tabset"> -->
+            <!-- <tab heading='Edit Photos'> -->
+                <!-- <h2> to see if shows in table right now nothing </h2> -->
+
+                <app-entry-fhoto
+                  [fhotos]="fhotos"
+                  [entry]="entryOut"
+                  [place]="placeOut"
+
+                >  </app-entry-fhoto>
+
+            <!-- </tab> -->
+        <!-- </tabset> -->
+    </div>
+</div>
+

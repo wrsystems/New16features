@@ -11,10 +11,8 @@ namespace API.Interfaces
         void AddFlak(Flak Flak);
         void DeleteFlak(Flak Flak);
         Task<Flak> GetFlakById(int id);
-        Task<IEnumerable<FlakDto>> GetFlakBySubject(string currentUsername);
-        Task<bool> SaveAllAsync();
-        
-        // Task<AppUser> GetUserByUsernameAsyncFlak(string username);
+         Task<bool> SaveAllAsync();
         Task<IEnumerable<FlakDto>> GetFlakUsername(string currentUsername);
+        Task<IEnumerable<FlakDto>> GetFlaksForEntryRepo(string username, int entryid);
     }
 }

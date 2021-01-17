@@ -55,5 +55,8 @@
     Phone: {{phone}}
   </div>
 
-
-
+<div *ngIf="doneWithPlace"  >
+    <app-entry-content
+        [place] = "placeOut"
+    ></app-entry-content>
+</div>

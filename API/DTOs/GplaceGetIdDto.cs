@@ -2,10 +2,10 @@ using System;
 
 namespace API.DTOs
 {
-    public class GplacePostDto
+    public class GplaceGetIdDto
     {
         public int Id { get; set; }
-
+        
         #nullable enable
          public int EntryId { get; set; }
         public string? PlaceId { get; set; }
@@ -24,7 +24,6 @@ namespace API.DTOs
         public bool UseOrg { get; set; }
         public int OrgId { get; set; }
         public bool FormSubmitted { get; set; }
-
 
         public int UserId { get; set; }
         public string? UserName { get; set; }

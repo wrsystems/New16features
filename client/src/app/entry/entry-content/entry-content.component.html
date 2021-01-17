@@ -2,7 +2,7 @@
 <!-- copied from jlogon modified 12-14 -->
 
 <!-- main app container -->
-<div *ngIf="!submitted && entry.sentToFlak" class="card m-3">
+<div *ngIf="!submitted" class="card m-3">
 
   <h5 class="card-header">Bobbys Hopefull Reactive Form</h5>
   <div class="card-body">
@@ -59,9 +59,14 @@
   </div>
 </div>
 
-<!-- credits -->
-<!-- <div class="text-center">
-  <p>
-      WRS Technology Inc
-  </p>
-</div> -->
+<div *ngIf="submitted && doneWithPost" class="card m-3">
+    <app-entry-fhoto-edit21
+      [entry] = "entryOne"
+      [place] = "placeOut"
+      >
+    </app-entry-fhoto-edit21>
+
+    <!-- <app-entry-fhoto
+    [entry] = "entryOne" >
+  </app-entry-fhoto> -->
+</div>

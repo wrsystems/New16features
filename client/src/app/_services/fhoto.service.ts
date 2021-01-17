@@ -13,22 +13,40 @@ export class FhotoService {
   constructor(private http: HttpClient) { }
 
 
-  getFlakUserName(username: string) {
-    return this.http.get<Fhoto[]>(this.baseUrl + 'flak/username/' + username);
-  }
 
-  // 12-30 new & in controller
+  // 01-04-21 new & in controller
   getFhotoEntryId(id: number) {
-    return this.http.get<Fhoto>(this.baseUrl + 'fhoto/entry/' + id);
+    return this.http.get<Fhoto[]>(this.baseUrl + 'fhoto/entry/' + id);
   }
 
-  sendFlak(username: string, content: string) {
-    return this.http.post<Fhoto>(this.baseUrl + 'flak', {recipientUsername: username, content})
+ // 01-15-21 new & in controller does not help problem, reverted back to above
+ getFhotoEid(entryid: number) {
+  return this.http.get<Fhoto[]>(this.baseUrl + 'fhoto/eid/' + entryid);
+}
+
+  // 01-05-21 new & in-controller
+  deleteFhoto(photoId: number) {
+    return this.http.delete(this.baseUrl + 'fhoto/delete-photo/' + photoId);
   }
 
-  deleteFlak(id: number) {
-    return this.http.delete(this.baseUrl + 'flak/' + id);
+  // 01-05-21 new PUT attempt
+  updateFhoto(model: any) {
+    return this.http.put(this.baseUrl + 'fhoto/', model).pipe(
+      map((user: Fhoto) => {
+        // console.log(' fhoto service - post', user)
+        // if (user) {
+        //   console.log('In fhoto Service, apparently not null or void')
+        // }
+      })
+    );
   }
+
+
+  // sendMessage(username: string, content: string) {
+  //   return this.http.post<Message>(this.baseUrl + 'messages', {recipientUsername: username, content})
+  // }
+
+
 
   // edited this function 12-30 & in controller
   postFhoto(model: any) {
@@ -41,6 +59,21 @@ export class FhotoService {
         }
       })
     );
+  }
+
+
+  // *******************************  not used *******************************
+
+  getFlakUserName(username: string) {
+    return this.http.get<Fhoto[]>(this.baseUrl + 'flak/username/' + username);
+  }
+
+  sendFlak(username: string, content: string) {
+    return this.http.post<Fhoto>(this.baseUrl + 'flak', {recipientUsername: username, content})
+  }
+
+  deleteFlak(id: number) {
+    return this.http.delete(this.baseUrl + 'flak/' + id);
   }
 
 }

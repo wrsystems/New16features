@@ -11,25 +11,20 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-// 12-27
-using System.Linq;
-using AutoMapper.QueryableExtensions;
-using Microsoft.EntityFrameworkCore;
-
 namespace API.Controllers
 {
     [Authorize]
-    public class GplaceController : BaseApiController
+    public class Gplace21Controller : BaseApiController
     {
         private readonly DataContext _context;
         private readonly IUserRepository _userRepository;
-        private readonly IGplaceRepository _gplaceRepository;
+        private readonly IGplace21Repository _gplace21Repository;
         private readonly IMapper _mapper;
-        public GplaceController(IUserRepository userRepository, IGplaceRepository gplaceRepository, 
+        public Gplace21Controller(IUserRepository userRepository, IGplace21Repository gplace21Repository, 
             IMapper mapper, DataContext context)
         {
             _mapper = mapper;
-            _gplaceRepository = gplaceRepository;
+            _gplace21Repository = gplace21Repository;
             _userRepository = userRepository;
             _context = context;
         }
@@ -40,17 +35,8 @@ namespace API.Controllers
     // *******************  First endpoint Writes google details when selected to db, lots of sups expected
     // ***********************************************
         [HttpPost]
-        public async Task<ActionResult<Gplace>> AddGplace(Gplace gplacePostDto)
+        public async Task<ActionResult<Gplace>> AddGplace21(Gplace gplacePostDto)
         {
-            // var username = User.GetUsername();
-
-            // if (username == createEntryDto.RecipientUsername.ToLower())
-            //     return BadRequest("You cannot send EntryS !! to yourself dumbhead ");
-
-            // var sender = await _userRepository.GetUserByUsernameAsync(username);
-            // var recipient = await _userRepository.GetUserByUsernameAsync(createEntryDto.RecipientUsername);
-
-            // if (recipient == null) return NotFound();
 
             var gplace = new Gplace
             {
@@ -79,7 +65,7 @@ namespace API.Controllers
 
             };
 
-                _gplaceRepository.AddGplace(gplace);
+                _gplace21Repository.AddGplace21(gplace);
 
             //    _context.Gplaces.Add(gplace);
             //     await _context.SaveChangesAsync();
@@ -88,83 +74,25 @@ namespace API.Controllers
                 Console.WriteLine(" <<<<<<<<<<<<<<<<==============================");
                 Console.WriteLine("Gplace Id: " + id.ToString() + " gplace.id: " + id.ToString());
 
-            if (await _gplaceRepository.SaveAllAsync()) return Ok(_mapper.Map<GplaceDto>(gplace));
+            if (await _gplace21Repository.SaveAllAsync()) return Ok(_mapper.Map<GplaceDto>(gplace));
 
-            return BadRequest("Failed to send Gplace !! ");
+            return BadRequest("Failed to send Gplace21 !! ");
             // return Ok(id);
 
         }
 
-
-    // ========================================================
-    // **************  Get Gplace For Specific EntryId
-    // ========================================================
-
-        [HttpGet("entry/{entryid}")]
-        public async Task<ActionResult<GplaceDto>> GetPlaceForEntity(int entryid)
-        {
-            var username = User.GetUsername();  // get username from token
-                Console.WriteLine(" <<<<<<<<<<<<<<< Gplace <==============================");
-                Console.WriteLine("username: " + username + "   entryid : " + entryid.ToString());
-
-            var place = await _gplaceRepository.GetPlaceForEntryRepo(username, entryid);
-
-            // if (await _gplaceRepository.SaveAllAsync()) return Ok(_mapper.Map<GplaceDto>(place));
-            //     return BadRequest("Failed to retrieve the Gplace rows !! ");
-        
-            return Ok(place);
-
-        }
-
-    // ========================================================
-    // **************  Get Gplace For Specific EntryId  TEST  TEST  TEST
-    // ========================================================
-
-        [HttpGet("eid/{id}")]
-         public async Task<Gplace> GetPlaceById(int id)
-         {
-            var place = await _context.Gplaces.FirstOrDefaultAsync(e => e.EntryId == id);
-              return place;
-         }
-
-
-
-        // ************************************
-        // *******************  Second endpoint  not sure if this is EVER USED ??
-        // *************************************
-
-        [HttpGet("subject/{subject}")]
-        public async Task<ActionResult<IEnumerable<GplaceDto>>> GetGplaceByFullDescription(string fullDescription)
-        {
-            // var currentUsername = User.GetUsername();
-            // look-up username from the token in ClaimsPrincipleExtensions
-            // var user = await _gplaceRepository.GetUserByUsernameAsyncGplace(User.GetUsername());
-            // var currentUsername = user.UserName;
-
-            return Ok(await _gplaceRepository.GetGplaceByFullDescription(fullDescription));
-        }
-
-        // ************************************
-        // *******************  Third endpoint  Bring back google to match entry placeId (string)
-        // *************************************
-
-        [HttpGet("placeid/{placeId}")]
-        public async Task<ActionResult<GplaceDto>> GetGplaceByPlaceId(string placeId)
-        {
-            return Ok(await _gplaceRepository.GetGplaceByPlaceId(placeId));
-        }
 
     // ****************************************************************************
     // *******************  Called By entry-home.ts  -- UPDATE --
     // ****************************************************************************
 
         [HttpPut]
-        public async Task<ActionResult> UpdateGplace(GplaceGetIdDto placeDto)
+        public async Task<ActionResult> UpdateGplace21(GplaceGetIdDto placeDto)
         {
             // var currentUsername = User.GetUsername();
 
-            var Id = placeDto.Id;
-            var x = await _gplaceRepository.GetGplaceById(Id);   // read the row
+            // var Id = placeDto.Id;
+            // var x = await _gplace21Repository.GetGplaceById(Id);   // read the row
 
             var gplace = new Gplace
             {
@@ -193,13 +121,12 @@ namespace API.Controllers
                 Match = placeDto.Match,
             };
 
-            _gplaceRepository.UpdateGplace(gplace);
+            _gplace21Repository.UpdateGplace21(gplace);
 
             if (await _userRepository.SaveAllAsync()) return NoContent();
 
-            return BadRequest("Failed to update gplace BADLY!! ");
+            return BadRequest("Failed to update gplace21 BADLY!! ");
         }
-
 
     }
 }

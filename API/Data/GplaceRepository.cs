@@ -11,7 +11,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
-{
+{  
     public class GplaceRepository : IGplaceRepository
     {
         private readonly DataContext _context;
@@ -25,6 +25,7 @@ namespace API.Data
     // first method - - need to add Entry to datacontext & appusers for ICollections
         public void AddGplace(Gplace gplace)
         {
+
             _context.Gplaces.Add(gplace);
         }
 
@@ -33,26 +34,83 @@ namespace API.Data
         {
             _context.Gplaces.Remove(gplace);
         }
-
+        
     // third method
-        public async Task<Gplace> GetGplaceById(int id)
+        public void UpdateGplace(Gplace gplace)
         {
-            return await _context.Gplaces
-                .SingleOrDefaultAsync(e => e.Id == id);
+            _context.Entry(gplace).State = EntityState.Modified;
+        }
+
+
+    // =======================================================================
+    // *****  Get place that matches entry id and username  01-14-21
+    // =======================================================================
+        public async Task<GplaceDto> GetPlaceForEntryRepo(string username, int entryid)
+        {
+            // var place = await _context.Gplaces
+            //     .Where(f => f.UserName == username && f.EntryId == entryid )
+            //     .ToListAsync();
+
+            var place = await _context.Gplaces.SingleOrDefaultAsync
+            (f => f.UserName == username && f.EntryId == entryid );
+
+            return _mapper.Map<GplaceDto>(place);
+
+            // return place;   
+            // return _mapper.Map<GplaceDto>(place);     
+            // return _mapper.Map<IEnumerable<GplaceDto>>(place);
+        }
+
+
+
+
+    //  ************************************
+    //  method return gplacess using entryId  note used in controller 01-11
+    //  ************************************
+        public async Task<IEnumerable<GplaceGetIdDto>> GetEntryGplaceById(int id)
+        {
+            var places = await _context.Gplaces
+                .Where(f => f.EntryId == id)
+                .ToListAsync();
+
+                Console.WriteLine(" ********************** ");
+                Console.WriteLine(" Fhoto Repo BBBBBBBBBB ");
+                Console.WriteLine(" ********************** ");
+
+            return _mapper.Map<IEnumerable<GplaceGetIdDto>>(places);       
+        }
+
+    // ***************************************
+    // **********   third method
+    // ***************************************
+        public async Task<GplaceDto> GetGplaceByPlaceId(string placeId)
+        {
+            var Gplaces = await _context.Gplaces
+                .SingleOrDefaultAsync(e => e.PlaceId == placeId);
+
+            return _mapper.Map<GplaceDto>(Gplaces);
+
+        }
+
+    // ******************************************************************
+    // **********   method to get place so we can update it with entry-id
+    // ******************************************************************
+        public async Task<GplaceDto> GetGplaceById(int Id)
+        {
+            var Gplaces = await _context.Gplaces
+                .SingleOrDefaultAsync(e => e.Id == Id);
+
+            return _mapper.Map<GplaceDto>(Gplaces);
+
         }
 
     // fourth method
-        public async Task<IEnumerable<GplaceDto>> GetGplaceByFullDescription(string username, 
-            string subject)
+        public async Task<IEnumerable<GplaceDto>> GetGplaceByFullDescription(string fullDescription)
         {
-
-                Console.WriteLine(" ********************** ");
-                Console.WriteLine(" Gplaces Repository", username);
-                Console.WriteLine(" ********************** ");
 
         // Note: think context.Entrys means specific db table
             var Gplaces = await _context.Gplaces
-                .Where(e => e.FullDescription == subject
+                .Where(e => e.FullDescription == fullDescription
                         //  .Where(e => e.UserName == username && e.Subject == subject
                 )
                 .ToListAsync();

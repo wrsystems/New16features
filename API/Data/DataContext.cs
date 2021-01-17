@@ -23,6 +23,9 @@ namespace API.Data
     // Gplaces added 12-7
         public DbSet<Gplace> Gplaces { get; set; }
 
+    // 01-13 to try second contoller
+        // public DbSet<Gplace> Gplaces { get; set; }
+
     // Entrys, Organization added 11-12
         public DbSet<Entry> Entrys { get; set; }
         public DbSet<Organization> Organizations { get; set; }

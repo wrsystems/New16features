@@ -2,7 +2,7 @@
 <!-- copied member-detail.html 12-23 removed ngIf cause using resolver -->
 
 <div class="row">
-    <div class="col-4">
+    <!-- <div class="col-4">
         <div class="card">
             <img src="{{'./assets/user.png'}}" alt="{{flak.orgName}}"
 
@@ -29,26 +29,33 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <div class="col-8">
+    <!-- <div class="col-8"></div>  take out col-8 -->
+    <div>
         <tabset class="entry-tabset" #flakTabs>
-            <tab heading='About {{flak.subject}}' (selectTab)="onTabActivated($event)">
-                <h4>Description </h4>
-                <p>{{flak.content}}</p>
+            <tab heading='Message' (selectTab)="onTabActivated($event)">
+              <h4>Subject </h4>
+              <p>{{flak.subject}}</p>
+              <h4>Description </h4>
+              <p>{{flak.content}}</p>
             </tab>
-            <tab heading='Flak photos' (selectTab)="onTabActivated($event)" >
+
+            <tab heading='Flak Photos' (selectTab)="onTabActivated($event)" >
                 <p> will be photos </p>
             </tab>
-            <tab heading='Flaks' (selectTab)="onTabActivated($event)" >
-              <p> flak ? not sure need this </p>
+
+            <!-- <tab heading='Flaks' (selectTab)="onTabActivated($event)" >
+              <p> flak ? not sure need this </p> -->
                 <!-- <ngx-gallery [options]="galleryOptions" [images]="galleryImages"
                     style="display: inline-block; margin-bottom: 20px;"></ngx-gallery> -->
-            </tab>
-            <tab heading='Business Contacts' (selectTab)="onTabActivated($event)" >
-                  <p> will be placess not sure need this </p>
+            <!-- </tab> -->
+
+            <!-- <tab heading='Business Contacts' (selectTab)="onTabActivated($event)" >
+                  <p> will be placess not sure need this </p> -->
                 <!-- <app-member-messages [messages]="messages" [username]="member.username"></app-member-messages> -->
-            </tab>
+            <!-- </tab> -->
+
         </tabset>
     </div>
 </div>

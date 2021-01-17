@@ -6,6 +6,7 @@ import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
 
 import { map } from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs';
+import { Observable } from 'rxjs'
 
 
 @Injectable({
@@ -15,6 +16,7 @@ export class EntryService {
   baseUrl = environment.apiUrl;
   private currentEntrySource = new ReplaySubject<Entry>(1);   // added 1-2-21
   currentEntry$ = this.currentEntrySource.asObservable();
+  its = 2777;
 
   constructor(private http: HttpClient) { }
 
@@ -25,6 +27,7 @@ export class EntryService {
     params = params.append('Container', container);
     return getPaginatedResult<Entry[]>(this.baseUrl + 'entrys', params, this.http);
   }
+
 
   // added 12-24 from old flaks.service
   getEntrysUsername(username: string) {
@@ -49,17 +52,42 @@ export class EntryService {
 
   postEntry(model: any) {
     return this.http.post(this.baseUrl + 'entrys', model).pipe(
+      // return this.http.post<Entry>(this.baseUrl + 'entrys', model).pipe(
       map((entry: Entry) => {
         // console.log(' bbbbb', user)
         if (entry) {
           // console.log('In Entry Service, apparently not null or void')
         //  this.setCurrentUser(user);
-        }
-        this.currentEntrySource.next(entry);
-        // console.log('Entry service Post return values :', entry);
+
+        // this.currentEntrySource.next(entry);
+        // this.its = entry.id;
+        // console.log('Entry service Post return values JUST ID :', entry.id);
+        }    // note 01-10 move } to here fram above  console log still NOT PRINT
       })
     );
+    console.log('Entry service Post return values JUST ID :', this.its);
   }
+
+  // entryPost(model: Entry) {
+  //   return this.http.post<Entry>(this.baseUrl + 'entrys', model).pipe(
+  //     map((entry: Entry) => {
+  //       next: data => {
+  //           return data;
+  //       },
+  //       error: error => {
+  //           console.error('There was an error!', error);
+  //       }
+  //   })
+  // }
+
+
+  addEntry(entry:Entry): Observable<any> {
+    const headers = { 'content-type': 'application/json'}
+    const body=JSON.stringify(entry);
+    // console.log('From ENTRY SERVICE, JSON BODY :', body)
+    return this.http.post(this.baseUrl + 'entrys', body,{'headers':headers})
+  }
+
 
   // getMessageThread(username: string) {
   //   return this.http.get<Message[]>(this.baseUrl + 'messages/thread/' + username);

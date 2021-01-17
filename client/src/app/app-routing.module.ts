@@ -21,11 +21,11 @@ import { FlakDetailedResolver } from './_resolvers/flak-detailed.resolver';
 
 
 // 1-2-21 renamed & new ALL ENTRY
-import { EntryFhotoLoaderComponent } from './entry/entry-fhoto-loader/entry-fhoto-loader.component';
-import { EntryFhotoEditComponent } from './entry/entry-fhoto-edit/entry-fhoto-edit.component';
+// import { EntryFhotoLoaderComponent } from './entry/entry-fhoto-loader/entry-fhoto-loader.component';
+// import { EntryFhotoEditComponent } from './entry/entry-fhoto-edit/entry-fhoto-edit.component';
 import { EntryHomeComponent } from './entry/entry-home/entry-home.component';
 import { EntryContentComponent } from './entry/entry-content/entry-content.component';
-import { EntryJsontestComponent } from './entry/entry-jsontest/entry-jsontest.component';
+// import { EntryJsontestComponent } from './entry/entry-jsontest/entry-jsontest.component';
 import { EntryGoogleComponent } from './entry/entry-google/entry-google.component';
 import { AutocompleteComponent } from './entry/google-places/google-places.component';   // is GooglePlaceComponent
 import { EntryDetailComponent } from './entry/entry-detail/entry-detail.component';
@@ -42,7 +42,11 @@ import { FlakFhotoEditComponent } from './reply/flak-fhoto-edit/flak-fhoto-edit.
 import { FlaksDetailResolver } from './_resolvers/flaks-detail.resolver';
 import { ReplyDetailResolver } from './_resolvers/reply-detail.resolver';
 
+// import { EntryFhotoLoader21Component } from './entry/entry-fhoto-loader21/entry-fhoto-loader21.component';
+import { EntryFhotoEdit21Component } from './entry/entry-fhoto-edit21/entry-fhoto-edit21.component';
 
+import { EntryFhotoComponent } from './entry/entry-fhoto/entry-fhoto.component';
+import { ReplyFhotoEditComponent } from './reply/reply-fhoto-edit/reply-fhoto-edit.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -62,15 +66,24 @@ const routes: Routes = [
 
       // modified 12-16 from entrys to entry (no s) with google copied from ggmapext
       {path: 'entry', component: EntryHomeComponent},
-      {path: 'efhoto/:id', component: EntryFhotoEditComponent, resolve: {entry: EntryFhotoResolver}},
+      {path: 'google', component: EntryGoogleComponent},
+      {path: 'content', component: EntryContentComponent},
+      {path: 'fhoto', component: EntryFhotoComponent},
+      // {path: 'efhoto/:id', component: EntryFhotoEdit21Component, resolve: {entry: EntryFhotoResolver}},
+      {path: 'edetail', component: EntryDetailComponent},
 
    // added 12-24
       {path: 'replycards', component: ReplyHomeComponent},
-      {path: 'reply/:id', component: ReplyDetailComponent, resolve: {entry: ReplyDetailResolver}},
+      // 01-15-21
+      {path: 'reply/:id', component: ReplyFhotoEditComponent, resolve: {entry: ReplyDetailResolver}},
+      // {path: 'reply/:id', component: ReplyDetailComponent, resolve: {entry: ReplyDetailResolver}},
+
    // 12-28
       {path: 'flak/:id', component: FlaksDetailComponent, resolve: {entry: FlaksDetailResolver}},
-   // 12-29
-      // {path: 'flak', component: FlakContentComponent},
+   // 01-04-21
+      // {path: 'fhoto', component: EntryFhotoEdit21Component},
+
+
 
       {path: 'admin', component: AdminPanelComponent, canActivate: [AdminGuard]},
     ]

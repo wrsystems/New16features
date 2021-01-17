@@ -25,8 +25,36 @@ namespace API.Data
     // first method - - need to add Entry to datacontext & appusers for ICollections
         public void AddEntry(Entry entry)
         {
-            _context.Entrys.Add(entry);
+
+                _context.Entrys.Add(entry);
+                _context.SaveChanges();
+
+                int id = entry.Id;
+
+                // Console.WriteLine(" ============================>>>>>>>");
+                // Console.WriteLine("Entry Id: " + id.ToString() + " entry.id: " + id.ToString());
         }
+
+        // *****************************************************
+        //    try new add
+        // *****************************************************
+        public async Task<Entry> AddEntryReturnId (Entry entry)
+        // public async Task<IEnumerable<EntryDto>> AddEntryReturnId (Entry entry)
+        {
+                _context.Entrys.Add(entry);
+                await _context.SaveChangesAsync();
+
+                int id = entry.Id;
+                Console.WriteLine(" ============================>>>>>>>");
+                Console.WriteLine("Entry Id: " + id.ToString() + " entry.id: " + id.ToString());
+                
+            return entry;
+
+            // return await _context.SaveChangesAsync() > 0;
+            // return _mapper.Map<IEnumerable<EntryDto>>(entry);
+        }
+
+
 
     // // second method
         public void DeleteEntry(Entry entry)
@@ -69,7 +97,6 @@ namespace API.Data
         // copied user rep and renamed "Entry" 11/13
         public async Task<AppUser> GetUserByUsernameAsyncEntry(string username)
         {
-
                 Console.WriteLine(" ********************** ");
                 Console.WriteLine(" Entrys Repository AsyncEntry ", username);
                 Console.WriteLine(" ********************** ");
@@ -84,7 +111,28 @@ namespace API.Data
         }
 
 
-    // 12-24 copied from old flak repo
+    // sixth method -- to get entryID is sole purpose used in entry-home.ts
+        public async Task<IEnumerable<EntryDto>> GetEntryJustWritten
+                    (string  username, string orgname, string placeid)
+        {
+
+            var Entrys = await _context.Entrys
+                .Where(e => string.Compare(e.UserName, username) >= 0 && string.Compare(e.OrgName, orgname) >= 0
+                         && string.Compare(e.PlaceId, placeid) >= 0
+                )
+                .ToListAsync();
+
+
+                // var result = ef.services.Where(entry => 
+                //     string.Compare(entry.tarikhservice, textBoxX1.Text) >= 0
+                //     && string.Compare(entry.tarikhservice, textBoxX2.Text) <= 0
+                //     .ToList()
+
+            return _mapper.Map<IEnumerable<EntryDto>>(Entrys);
+        }
+
+
+    // 12-24 copied from old flak re
     // 12-20 main task
     // 11/4 note parans are now changed - -  *********************************************
         public async Task<PagedList<EntryDto>> GetEntrysForUser(EntryParams entryParams)

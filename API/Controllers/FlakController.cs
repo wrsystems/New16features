@@ -24,19 +24,23 @@ namespace API.Controllers
     {
 
         private readonly DataContext _context;
+         private readonly IUserRepository _userRepository;
         private readonly IFlakRepository _flakRepository;
         private readonly IMapper _mapper;
-        public FlakController(IFlakRepository flakRepository, 
+        public FlakController(IFlakRepository flakRepository, IUserRepository userRepository,
             IMapper mapper, DataContext context)
         {
             _mapper = mapper;
             _flakRepository = flakRepository;
+            _userRepository = userRepository;
             _context = context;
         }
 
         // private static readonly int myuser8 = 8;  // assign variable a value 11/13
+    // ========================================================
+    // *******************  First endpoint POST
+    // ========================================================
 
-    // *******************  First endpoint
         [HttpPost]
         public async Task<ActionResult<FlakDto>> AddFlak(FlakPostDto flakPostDto)
         {
@@ -76,6 +80,8 @@ namespace API.Controllers
                 UserDeleted = flakPostDto.UserDeleted,
                 OrgDeleted = flakPostDto.OrgDeleted,
                 FhotoAdded = flakPostDto.FhotoAdded,
+                EntryId = flakPostDto.EntryId,
+            
                 // UserId = user.Id,
                 // UserName = user.UserName,
 
@@ -91,29 +97,37 @@ namespace API.Controllers
 
         }
 
-       // *******************  second endpoint (12-24 merged from old flak controller)
-       // 12-20 This is the main method for Flak to get cards *******************************************
-        // [HttpGet]
-        // public async Task<ActionResult<IEnumerable<FlakDto>>> GetFlakForUser([FromQuery] 
-        //     FlakParams flakParams)
-        // {
-        //     // flakParams.Username = "ruthie";  // only for testing 
-        //     flakParams.Username = User.GetUsername(); // 12-19 this should work, function is in ...look at definition
+    // ========================================================
+    // *******************  Get Flaks For Specific Entry
+    // ========================================================
 
-        //     var flaks = await _flakRepository.GetFlaksForUser(flakParams);
+        [HttpGet("entry/{entryid}")]
+        public async Task<ActionResult<IEnumerable<FlakDto>>> GetFlaksForEntry(int entryid)
+        {
+            var username = User.GetUsername();  // get username from token
+                Console.WriteLine(" <<<<<<<<<<<<<<<<==============================");
+                Console.WriteLine("username: " + username + "   entryid : " + entryid.ToString());
+                //  Console.WriteLine("Gplace Id: " + id.ToString() + " gplace.id: " + id.ToString());
 
-        //     Response.AddPaginationHeader(flaks.CurrentPage, flaks.PageSize, 
-        //         flaks.TotalCount, flaks.TotalPages);
 
-        //     return flaks;
-        // }
+            var flaks = await _flakRepository.GetFlaksForEntryRepo(username, entryid);
 
-        // *******************  Third endpoint (12-24 merged from old flak controller)
+            // if (await _flakRepository.SaveAllAsync()) return Ok(_mapper.Map<FlakDto>(flaks));
+            //     return BadRequest("Failed to retrieve the Flak rows !! ");
+        
+            return Ok(flaks);
+
+        }
+
+        // ****************************************************************************
+        // *******************  Read all the flaks for a specified user  (Wrong !!)
+        // Should read all the flaks for specified username (or id) PLUS entry.id 
+        // ****************************************************************************
+
         [HttpGet("username/{username}")]
         public async Task<ActionResult<IEnumerable<FlakDto>>> GetFlakUsername(string username)
         {
             var currentUsername = username;
-
             return Ok(await _flakRepository.GetFlakUsername(currentUsername));
         }
 

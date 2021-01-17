@@ -1,54 +1,53 @@
-<div class="row">
-    <div class="col-4">
-        <div class="card">
-            <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}"
-                class="card-img-top img-thumbnail">
-            <div class="card-body">
-                <div>
-                    <strong>Location:</strong>
-                    <p>{{member.city}}, {{member.country}}</p>
-                </div>
-                <div>
-                    <strong>Age:</strong>
-                    <p>{{member.age}}</p>
-                </div>
-                <div>
-                    <strong>Last Active:</strong>
-                    <p>{{member.lastActive | timeago}}</p>
-                </div>
-                <div>
-                    <strong>Member since:</strong>
-                    <p>{{member.created | date: 'dd MMM yyyy'}}</p>
-                </div>
-            </div>
-            <div class="card-footer">
-                <div class="btn-group d-flex">
-                    <button class="btn btn-primary">Like</button>
-                    <button (click)="selectTab(3)" class="btn btn-success">Message</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
+<h2>  ENTRY-DETAIL fhotos length: {{fhotos.length}} </h2>
+
+<!-- <div class="text-center">
+    <button
+      routerLink='/members'
+      class="btn btn-primary">
+      Go To Main Nav
+    </button>
+</div> -->
+
+
+<div class="row">
     <div class="col-8">
-        <tabset class="member-tabset" #memberTabs>
-            <tab heading='About {{member.knownAs}}' (selectTab)="onTabActivated($event)">
-                <h4>Description</h4>
-                <p>{{member.introduction}}</p>
-                <h4>Looking for</h4>
-                <p>{{member.lookingFor}}</p>
+        <tabset class="entry-tabset" #entryTabs>
+
+            <tab heading='Message' (selectTab)="onTabActivated($event)">
+                <h4>Subject</h4>
+                <p>{{entry.subject}}</p>
+                <h4>Content</h4>
+                <p>{{entry.content}}</p>
             </tab>
-            <tab heading='Interests' (selectTab)="onTabActivated($event)">
-                <h4>Interests</h4>
-                <p>{{member.interests}}</p>
-            </tab>
+
             <tab heading='Photos' (selectTab)="onTabActivated($event)">
+              <div *ngIf="fhotos.length > 0" >
+                <button
+                  (click)="loadFhotos()"
+                  class="btn btn-sm"
+                  >Click To Show All Fhotos
+                </button>
+
                 <ngx-gallery [options]="galleryOptions" [images]="galleryImages"
-                    style="display: inline-block; margin-bottom: 20px;"></ngx-gallery>
+                style="display: inline-block; margin-bottom: 20px;"></ngx-gallery>
+              </div>
+              <div *ngIf="fhotos.length < 1" >
+                  <h5> No Photos Were loaded </h5>
+              </div>
+
+
             </tab>
-            <tab heading='Messages' (selectTab)="onTabActivated($event)">
-                <app-member-messages [messages]="messages" [username]="member.username"></app-member-messages>
-            </tab>
+
+            <tab heading='Business' (selectTab)="onTabActivated($event)">
+              <h4>Business Name</h4>
+              <p>{{place?.gname}}</p>
+              <h4>Address</h4>
+              <p>{{place?.fullAddress}}</p>
+              <h4>Phone Number</h4>
+              <p>{{place?.phone}}</p>
+          </tab>
+
         </tabset>
     </div>
 </div>

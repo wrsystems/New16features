@@ -5,6 +5,7 @@ namespace API.Entities
     public class Gplace
     {
         public int Id { get; set; }
+        public int EntryId { get; set; }
         public string PlaceId { get; set; }
         public string Gname { get; set;}
         public string FullDescription { get; set; }
@@ -21,6 +22,12 @@ namespace API.Entities
         public bool UseOrg { get; set; }
         public int OrgId { get; set; }
         public bool FormSubmitted { get; set; }
+
+        
+        public int UserId { get; set; }
+        public string UserName { get; set; }
+        public string OrgName { get; set; }
+        public string Match { get; set; }
 
     }
 }

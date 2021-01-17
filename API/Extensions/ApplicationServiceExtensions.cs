@@ -26,6 +26,9 @@ namespace API.Extensions
             // added 12-7
             services.AddScoped<IGplaceRepository, GplaceRepository>();
 
+            // 01-13-21 
+             services.AddScoped<IGplace21Repository, Gplace21Repository>();
+
             // added 11-03
             services.AddScoped<IEntryRepository, EntryRepository>();
             services.AddScoped<IOrganizationRepository, OrganizationRepository>();

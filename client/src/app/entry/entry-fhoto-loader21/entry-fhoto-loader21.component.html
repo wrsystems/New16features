@@ -3,19 +3,28 @@
 
 <!-- this div is to list the existing photos  alt="{{photo.url}}"   -->
 <!-- first row of the screen display -->
-<div class="row">
-  <div class="col-2" *ngFor="let photo of member.photos">
-      <img src="{{photo.url}}" alt="{{photo.url}}" class="img-thumbnail p-1">
+
+<div *ngIf="doneWithLoader" class="text-center" >
+    <button
+      routerLink='/edetail'
+      class="btn btn-primary" >
+      GoTo Summary PLEASE!!
+    </button>
+</div>
+
+<div class="row" *ngIf="fhotos.length > 0"   >
+  <div class="col-2" *ngFor="let fhoto of fhotos">
+      <img src="{{fhoto.url}}" alt="{{fhoto.url}}" class="img-thumbnail p-1">
       <div class="text-center">
           <button
-              [disabled]="photo.isMain"
-              (click)="setMainPhoto(photo)"
-              [ngClass]='photo.isMain ? "btn-success active" : "btn-outline-success"'
+              [disabled]="fhoto.isMain"
+              (click)="setMainFhoto(fhoto)"
+              [ngClass]='fhoto.isMain ? "btn-success active" : "btn-outline-success"'
               class="btn btn-sm"
           >Main</button>
           <button
-              [disabled]="photo.isMain"
-              (click)="deletePhoto(photo.id)"
+              [disabled]="fhoto.isMain"
+              (click)="deleteFhoto(fhoto.id)"
               class="btn btn-sm btn-danger"
           ><i class="fa fa-trash"></i></button>
       </div>
@@ -26,7 +35,7 @@
 
     <div class="col-md-3">
 
-        <h3>Add Photos</h3>
+        <h3>Add Fhotos</h3>
 
         <div ng2FileDrop
              [ngClass]="{'nv-file-over': hasBaseDropzoneOver}"
@@ -34,7 +43,7 @@
              [uploader]="uploader"
              class="card bg-faded p-3 text-center mb-3 my-drop-zone">
              <i class="fa fa-upload fa-3x"></i>
-            Drop photos here
+            Drop fhotos here
         </div>
 
         Multiple

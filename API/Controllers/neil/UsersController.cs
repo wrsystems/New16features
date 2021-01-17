@@ -101,7 +101,7 @@ namespace API.Controllers
                 photo.IsMain = true;
             }
 
-            user.Photos.Add(photo);
+            user.Photos.Add(photo);  // 01-05-2021 I guess this a c# function
 
             if (await _userRepository.SaveAllAsync())  // think means to implement the "add" and return true when done
             {
@@ -126,7 +126,7 @@ namespace API.Controllers
             if (currentMain != null) currentMain.IsMain = false;
             photo.IsMain = true;
 
-            if (await _userRepository.SaveAllAsync()) return NoContent();
+            if (await _userRepository.SaveAllAsync()) return NoContent();   // 01-04-21 assume this does a user save but IS PUT!
 
             return BadRequest("Failed to set main photo");
         }
